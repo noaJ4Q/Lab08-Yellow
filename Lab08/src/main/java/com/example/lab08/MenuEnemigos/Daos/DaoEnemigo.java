@@ -24,7 +24,7 @@ public class DaoEnemigo {
         String user = "root";
         String password = "root";
         String url = "jdbc:mysql://localhost:3306/yellow";
-        String sql = "select * from enemigo e" +
+        String sql = "select * from enemigo e " +
                 "left join clase c on e.idClase = c.idClase " +
                 "left join genero g on e.idGenero = g.idGenero";
 
