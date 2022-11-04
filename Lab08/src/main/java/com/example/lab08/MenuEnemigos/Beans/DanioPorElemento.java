@@ -1,6 +1,9 @@
 package com.example.lab08.MenuEnemigos.Beans;
 
-public class DañoPorElemento {
+
+public class DanioPorElemento {
+
+    private int idDanioPorElemento;
     private Clase clase;
     private Elemento elemento;
     private float dañoRecibido;
@@ -27,5 +30,13 @@ public class DañoPorElemento {
 
     public void setDañoRecibido(float dañoRecibido) {
         this.dañoRecibido = dañoRecibido;
+    }
+
+    public int getIdDanioPorElemento() {
+        return idDanioPorElemento;
+    }
+
+    public void setIdDanioPorElemento(int idDanioPorElemento) {
+        this.idDanioPorElemento = idDanioPorElemento;
     }
 }
