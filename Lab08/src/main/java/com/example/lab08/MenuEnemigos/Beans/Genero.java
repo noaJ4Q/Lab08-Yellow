@@ -1,14 +1,14 @@
 package com.example.lab08.MenuEnemigos.Beans;
 
 public class Genero {
-    private int idGenero;
+    private String idGenero;
     private String nombreGenero;
 
-    public int getIdGenero() {
+    public String getIdGenero() {
         return idGenero;
     }
 
-    public void setIdGenero(int idGenero) {
+    public void setIdGenero(String idGenero) {
         this.idGenero = idGenero;
     }
 
