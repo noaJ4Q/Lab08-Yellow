@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class DaoDanioPorElemento {
 
-    public ArrayList<DanioPorElemento> obtenerListaDeDaniosPorElemento(){
+    public ArrayList<DanioPorElemento> obtenerListaDeDaniosPorElemento() {
         ArrayList<DanioPorElemento> listaDaniosPorElemento = new ArrayList<>();
 
         try {
@@ -20,12 +20,12 @@ public class DaoDanioPorElemento {
 
         //Conexion a DB
 
-        String user="root";
-        String password="root";
-        String url="jdbc:mysql://localhost:3306/yellow";
-        String sql ="select * from danioporelemento dpe"+
-                    "left join clase c on dpe.idClase = c.idClase "+
-                    "left join elemento e on dpe.idElemento = e.idElemento";
+        String user = "root";
+        String password = "root";
+        String url = "jdbc:mysql://localhost:3306/yellow";
+        String sql = "select * from danioporelemento dpe" +
+                "left join clase c on dpe.idClase = c.idClase " +
+                "left join elemento e on dpe.idElemento = e.idElemento";
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
              Statement stmt = connection.createStatement();
@@ -33,7 +33,6 @@ public class DaoDanioPorElemento {
 
             while (rs.next()) {
                 DanioPorElemento dpel = new DanioPorElemento();
-                dpel.setIdDanioPorElemento(rs.getInt(1));
                 Clase clase = new Clase();
                 clase.setIdClase(rs.getInt("c.idClase"));
                 clase.setNombreClase(rs.getString("c.nombre"));
@@ -42,7 +41,7 @@ public class DaoDanioPorElemento {
                 elemento.setIdElemento(rs.getInt("e.idElemento"));
                 elemento.setNombreElemento(rs.getString("e.nombre"));
                 dpel.setElemento(elemento);
-                dpel.setDañoRecibido(rs.getFloat(4));
+                dpel.setDanoRecibido(rs.getFloat("danioRecibido"));
                 listaDaniosPorElemento.add(dpel);
             }
         } catch (SQLException e) {
