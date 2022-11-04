@@ -15,6 +15,16 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+
+--
+-- Create schema hr
+--
+DROP DATABASE IF EXISTS `yellow`;
+CREATE DATABASE  IF NOT EXISTS `yellow`;
+USE `yellow`;
+
+
+
 --
 -- Table structure for table `catalogodeobjetos`
 --
