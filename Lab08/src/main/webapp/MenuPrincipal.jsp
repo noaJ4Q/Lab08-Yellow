@@ -8,6 +8,7 @@
         <h1><%= "Hello World!" %>
         </h1>
         <br/>
-        <a href="hello-servlet">Hello Servlet</a>
+        <!-- Ir al servelt de MenuEnemigos para ir a la lista de enemigos (por default) -->
+        <a href="<%=request.getContextPath()%>/MenuEnemigos">Menú Enemigos</a>
     </body>
 </html>
