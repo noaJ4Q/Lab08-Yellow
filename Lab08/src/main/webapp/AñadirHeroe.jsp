@@ -3,20 +3,19 @@
   Created by IntelliJ IDEA.
   User: noqe2
   Date: 05/11/2022
-  Time: 01:38
+  Time: 13:01
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    ArrayList<Heroe> listaHeroes = (ArrayList<Heroe>) request.getAttribute("listaHeroes");
+    ArrayList<Heroe> listaParejas = (ArrayList<Heroe>) request.getAttribute("listaParejas");
 %>
-<!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-        <title>Héroes / Wiki Fantástica</title>
+        <title>Añadir Héroe / Wiki Fantástica</title>
 
         <!-- Favicons -->
         <link href="assets/img/favicon.png" rel="icon">
@@ -37,9 +36,7 @@
 
         <!-- Template Main CSS File -->
         <link href="assets/css/style.css" rel="stylesheet">
-
     </head>
-
     <body style="background-color: #F9E64B;">
 
         <!-- ======= Header ======= -->
@@ -124,72 +121,94 @@
                 <div class="row">
 
                     <!-- Left side columns -->
-                    <div class="container-fluid">
+                    <div class="col col-lg-8">
                         <div class="row">
 
                             <!-- Top Selling -->
                             <div class="col-12">
                                 <div class="card top-selling overflow-auto">
 
-                                    <div class="filter">
-                                        <a class="icon" href="<%=request.getContextPath()%>/MenuHeroes?action=crear"><i class="btn btn-secondary">Añadir Héroe</i></a>
-                                    </div>
-
                                     <div class="card-body pb-0">
-                                        <h5 class="card-title">HÉROES</h5>
-                                        <table class="table table-borderless">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Nombre</th>
-                                                    <th>Edad</th>
-                                                    <th>Género</th>
-                                                    <th>Clase</th>
-                                                    <th>Nivel Inicial</th>
-                                                    <th>Ataque</th>
-                                                    <th>Pareja</th>
-                                                    <th>Experiencia Inicial</th>
-                                                    <th></th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <%
-                                                    for (Heroe heroe : listaHeroes) {
-                                                %>
-                                                <tr>
-                                                    <td class="fw-bold"><%=heroe.getIdHeroe()%>
-                                                    </td>
-                                                    <td><%=heroe.getNombre()%>
-                                                    </td>
-                                                    <td><%=heroe.getEdad()%>
-                                                    </td>
-                                                    <td><%=heroe.getGenero().getNombreGenero()%>
-                                                    </td>
-                                                    <td><%=heroe.getClase()%>
-                                                    </td>
-                                                    <td><%=heroe.getNivel()%>
-                                                    </td>
-                                                    <td><%=heroe.getAtaque()%>
-                                                    </td>
-                                                    <td><%=heroe.getPareja().getNombre()%>
-                                                    </td>
-                                                    <td><%=heroe.getExperiencia()%>
-                                                    </td>
-                                                    <td>
-                                                        <a type="button" href="<%=request.getContextPath()%>/MenuHeroes?action=editar">
-                                                            <i class="bx bxs-edit-alt"></i>
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a type="button" href="<%=request.getContextPath()%>/MenuHeroes?action=borrar&id=<%=heroe.getIdHeroe()%>">
-                                                            <i class="bx bxs-trash-alt"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <%}%>
-                                            </tbody>
-                                        </table>
+                                        <h5 class="card-title">AÑADIR HÉROE</h5>
+                                        <form method="post" action="<%=request.getContextPath()%>/MenuHeroes?action=guardar">
+
+                                            <div class="row mb-3">
+                                                <label for="nombre"
+                                                       class="col-md-4 col-lg-3 col-form-label">Nombre</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <input name="nombre" type="text" class="form-control" id="nombre">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="edad"
+                                                       class="col-md-4 col-lg-3 col-form-label">Edad</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <input name="edad" type="text" class="form-control" id="edad">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="genero"
+                                                       class="col-md-4 col-lg-3 col-form-label">Género</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <select class="form-select" id="genero" name="genero">
+                                                        <option selected>Seleccione un género</option>
+                                                        <option value="M">Masculino</option>
+                                                        <option value="F">Femenino</option>
+                                                        <option value="O">Otro</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="clase"
+                                                       class="col-md-4 col-lg-3 col-form-label">Clase</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <input name="clase" type="text" class="form-control" id="clase">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="nivel"
+                                                       class="col-md-4 col-lg-3 col-form-label">Nivel</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <input name="nivel" type="text" class="form-control" id="nivel">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="ataque"
+                                                       class="col-md-4 col-lg-3 col-form-label">Ataque</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <input name="ataque" type="text" class="form-control" id="ataque">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="idPareja"
+                                                       class="col-md-4 col-lg-3 col-form-label">Pareja (Opciones disponibles)</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <select class="form-select" id="idPareja" name="idPareja">
+                                                        <option selected>Seleccione el ID de la pareja</option>
+                                                        <%
+                                                            for (Heroe heroe: listaParejas){
+                                                        %>
+                                                        <option value="<%=heroe.getIdHeroe()%>"><%=heroe.getIdHeroe()%></option>
+                                                        <%}%>
+                                                        <option value="0">Sin pareja</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <div class="d-grid gap-2 col-6 col-lg-4 col-xl-3 mx-auto">
+                                                    <button class="btn btn-secondary" type="submit">Añadir</button>
+                                                </div>
+                                            </div>
+
+                                        </form>
+
                                     </div>
                                 </div>
                             </div><!-- End Top Selling -->
@@ -216,5 +235,4 @@
         <script src="assets/js/main.js"></script>
 
     </body>
-
 </html>
