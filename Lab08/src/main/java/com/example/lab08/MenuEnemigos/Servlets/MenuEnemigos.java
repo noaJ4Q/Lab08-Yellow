@@ -24,6 +24,12 @@ public class MenuEnemigos extends HttpServlet {
                 vista = request.getRequestDispatcher("MenuEnemigos.jsp");
                 vista.forward(request,response);
                 break;
+
+            case "crear":
+
+                vista = request.getRequestDispatcher("");
+
+                break;
         }
     }
 
