@@ -16,7 +16,7 @@ public class ServletInicio extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         try{
-            RequestDispatcher vista = request.getRequestDispatcher("MenuPrincipal.jsp");
+            RequestDispatcher vista = request.getRequestDispatcher("index.jsp");
             vista.forward(request, response);
         }catch(ServletException e){
 
