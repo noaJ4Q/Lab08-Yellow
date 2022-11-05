@@ -41,7 +41,7 @@
         <header class="header fixed-top d-flex align-items-center" style="background-color: #FAFAFA;">
 
             <div class="d-flex align-items-center justify-content-between">
-                <a href="index.html" class="logo d-flex align-items-center">
+                <a href="<%=request.getContextPath()%>/" class="logo d-flex align-items-center">
                     <span class="d-none d-lg-block">Wiki Fantástica</span>
                 </a>
                 <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -50,7 +50,7 @@
 
             <!-- BARRA DE BÚSQUEDA -->
             <div class="search-bar">
-                <form class="search-form d-flex align-items-center" method="POST" action="#">
+                <form class="search-form d-flex align-items-center" method="POST" action="<%=request.getContextPath()%>/MenuHeroes?action=buscar">
                     <input type="text" name="query" placeholder="Search" title="Enter search keyword">
                     <button type="submit" title="Search"><i class="bi bi-search"></i></button>
                 </form>
@@ -146,6 +146,7 @@
                                                     <th>Experiencia Inicial</th>
                                                     <th></th>
                                                     <th></th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -172,12 +173,17 @@
                                                     <td><%=heroe.getExperiencia()%>
                                                     </td>
                                                     <td>
-                                                        <a type="button" href="<%=request.getContextPath()%>/MenuHeroes?action=editar">
+                                                        <a type="button" href="<%=request.getContextPath()%>/MenuHeroes?action=inventario&idHeroe=<%=heroe.getIdHeroe()%>">
+                                                            <i class="bx bxs-box"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a type="button" href="<%=request.getContextPath()%>/MenuHeroes?action=editar&idHeroe=<%=heroe.getIdHeroe()%>">
                                                             <i class="bx bxs-edit-alt"></i>
                                                         </a>
                                                     </td>
                                                     <td>
-                                                        <a type="button" href="<%=request.getContextPath()%>/MenuHeroes?action=borrar&id=<%=heroe.getIdHeroe()%>">
+                                                        <a type="button" href="<%=request.getContextPath()%>/MenuHeroes?action=borrar&idHeroe=<%=heroe.getIdHeroe()%>">
                                                             <i class="bx bxs-trash-alt"></i>
                                                         </a>
                                                     </td>

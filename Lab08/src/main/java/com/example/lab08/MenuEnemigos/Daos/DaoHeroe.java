@@ -2,8 +2,6 @@ package com.example.lab08.MenuEnemigos.Daos;
 
 import com.example.lab08.MenuEnemigos.Beans.Genero;
 import com.example.lab08.MenuEnemigos.Beans.Heroe;
-
-import java.lang.reflect.Type;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -102,6 +100,58 @@ public class DaoHeroe {
         return listaHeroes;
     }
 
+    public Heroe buscarPorId(String idHeroeString){
+
+        int idHeroe = Integer.parseInt(idHeroeString);
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String url = "jdbc:mysql://localhost:3306/yellow";
+        String sql = "select h.idHeroe, h.nombre, h.edad, g.nombre, h.clase, h.nivel, h.ataque, h.idPareja from heroe h \n" +
+                "inner join genero g on (g.idGenero = h.idGenero)" +
+                "where idHeroe = ?";
+        Heroe heroe = null;
+
+        try (Connection conn = DriverManager.getConnection(url, "root","root");
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+
+            pstmt.setInt(1, idHeroe);
+
+            try (ResultSet rs = pstmt.executeQuery()){
+                if (rs.next()){
+                    heroe = new Heroe();
+
+                    heroe.setIdHeroe(rs.getInt(1));
+                    heroe.setNombre(rs.getString(2));
+                    heroe.setEdad(rs.getString(3));
+
+                    Genero genero = new Genero();
+                    genero.setNombreGenero(rs.getString(4));
+                    heroe.setGenero(genero);
+
+                    heroe.setClase(rs.getString(5));
+                    heroe.setNivel(rs.getInt(6));
+                    heroe.setAtaque(rs.getInt(7));
+
+                    Heroe pareja = new Heroe();
+                    pareja.setIdHeroe(rs.getInt(8)); // SI idPareja == NULL, JAVA LO CONVIERTE A 0
+                    heroe.setPareja(pareja);
+
+                    heroe.setExperiencia(rs.getFloat(9));
+
+                }
+            }
+
+        }catch (SQLException e){
+            throw new RuntimeException();
+        }
+        return heroe;
+    }
+
     public void actualizarPareja(int idHeroe, int idParejaNueva){
 
         try {
@@ -116,7 +166,12 @@ public class DaoHeroe {
         try(Connection conn = DriverManager.getConnection(url, "root", "root");
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setInt(1, idParejaNueva);
+            if (idParejaNueva==0){
+                pstmt.setNull(1, Types.INTEGER);
+            }
+            else {
+                pstmt.setInt(1, idParejaNueva);
+            }
             pstmt.setInt(2, idHeroe);
 
             pstmt.executeUpdate();
@@ -172,6 +227,44 @@ public class DaoHeroe {
         }catch (SQLException e){
             throw new RuntimeException();
         }
+    }
+
+    public void actualizarHeroe(Heroe heroe){
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String url = "jdbc:mysql://localhost:3306/yellow";
+        String sql = "UPDATE heroe SET nombre = ?, edad = ?, idGenero = ?, clase = ?, nivel = ?, ataque = ?, experiencia = ?, idPareja = ?" +
+                "WHERE idHeroe = ?";
+
+        try (Connection conn = DriverManager.getConnection(url, "root", "root");
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+
+            pstmt.setString(1, heroe.getNombre());
+            pstmt.setString(2, heroe.getEdad());
+            pstmt.setString(3, heroe.getGenero().getIdGenero());
+            pstmt.setString(4, heroe.getClase());
+            pstmt.setInt(5, heroe.getNivel());
+            pstmt.setInt(6, heroe.getAtaque());
+            pstmt.setFloat(7, heroe.getExperiencia());
+
+            if (heroe.getPareja().getIdHeroe()==0){
+                pstmt.setNull(8, Types.INTEGER);
+            }
+            else {
+                pstmt.setInt(8, heroe.getPareja().getIdHeroe());
+            }
+
+            pstmt.executeUpdate();
+
+        }catch (SQLException e){
+            throw new RuntimeException();
+        }
+
     }
 
     public void borrarHeroe(String idHeroeString){
