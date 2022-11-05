@@ -39,6 +39,19 @@ public class MenuEnemigos extends HttpServlet {
                 vista = request.getRequestDispatcher("AñadirEnemigo.jsp");
                 vista.forward(request,response);
                 break;
+
+            case "editar":
+                String idEnemigoStr = request.getParameter("id");
+                int idEnemigo = Integer.parseInt(idEnemigoStr);
+                Enemigo enemigo = daoEnemigo.buscarEnemigo(idEnemigo);
+                if(enemigo==null){
+                    response.sendRedirect(request.getContextPath()+"/MenuEnemigos");
+                }else{
+                    request.setAttribute("Enemigo",enemigo);
+                    vista= request.getRequestDispatcher("EditarEnemigo.jsp");
+                    vista.forward(request,response);
+                }
+             break;
         }
     }
 
@@ -47,19 +60,19 @@ public class MenuEnemigos extends HttpServlet {
         String action = request.getParameter("action");
         DaoEnemigo daoEnemigo = new DaoEnemigo();
 
-        switch (action){
-            case "guardar":
+        switch (action) {
+            case "guardar": //para Guardar el Enemigo creado
                 String nombre = request.getParameter("nombre");
                 Clase clase = new Clase();
                 String idClaseStr = request.getParameter("claseEnemigo");
                 int idClaseEnemigo = Integer.parseInt(idClaseStr);
                 clase.setIdClase(idClaseEnemigo);
                 String ataqueStr = request.getParameter("ataque");
-                int ataque = Integer.parseInt("ataqueStr");
+                int ataque = Integer.parseInt(ataqueStr);
                 String experienciaStr = request.getParameter("experiencia");
-                int experiencia = Integer.parseInt("experienciaStr");
-                String probabilidadStr = request.getParameter("probabilidad");
-                float probabilidad = Float.parseFloat("probabilidadStr");
+                int experiencia = Integer.parseInt(experienciaStr);
+                //String probabilidadStr = request.getParameter("probabilidad");
+                //float probabilidad = Float.parseFloat(probabilidadStr);
                 //como guardar el dato de probabilidad a la tabla de Dropeo???
                 Genero genero = new Genero();
                 String idGenero = request.getParameter("generoEnemigo");
@@ -74,7 +87,36 @@ public class MenuEnemigos extends HttpServlet {
                 enemigo.setGenero(genero);
                 daoEnemigo.agregarEnemigo(enemigo);
 
-                response.sendRedirect(request.getContextPath()+"/MenuEnemigos");
+                response.sendRedirect(request.getContextPath() + "/MenuEnemigos");
+
+                break;
+
+            case "actualizar": //para Actualizar los datos del Enemigo seleccionado
+                String nombre1 = request.getParameter("nombre");
+                Clase clase1 = new Clase();
+                String idClase1Str = request.getParameter("claseEnemigo");
+                int idClaseEnemigo1 = Integer.parseInt(idClase1Str);
+                clase1.setIdClase(idClaseEnemigo1);
+                String ataque1Str = request.getParameter("ataque");
+                int ataque1 = Integer.parseInt(ataque1Str);
+                String experiencia1Str = request.getParameter("experiencia");
+                int experiencia1 = Integer.parseInt(experiencia1Str);
+                //String probabilidad1Str = request.getParameter("probabilidad");
+                //float probabilidad1 = Float.parseFloat(probabilidad1Str);
+                Genero genero1 = new Genero();
+                String idGenero1 = request.getParameter("generoEnemigo");
+                genero1.setIdGenero(idGenero1);
+
+                //crear nuevo enemigo
+                Enemigo enemigo1 = new Enemigo();
+                enemigo1.setNombreEnemigo(nombre1);
+                enemigo1.setClase(clase1);
+                enemigo1.setAtaque(ataque1);
+                enemigo1.setExperiencia(experiencia1);
+                enemigo1.setGenero(genero1);
+                daoEnemigo.agregarEnemigo(enemigo1);
+
+                response.sendRedirect(request.getContextPath() + "/MenuEnemigos");
 
                 break;
         }
