@@ -23,7 +23,8 @@
 
         <!-- Google Fonts -->
         <link href="https://fonts.gstatic.com" rel="preconnect">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+              rel="stylesheet">
 
         <!-- Vendor CSS Files -->
         <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -50,8 +51,10 @@
                     <span class="d-none d-lg-block">Wiki Fantástica</span>
                 </a>
                 <i class="bi bi-list toggle-sidebar-btn"></i>
-            </div><!-- End Logo -->
+            </div>
+            <!-- End Logo -->
 
+            <!-- BARRA DE BÚSQUEDA -->
             <div class="search-bar">
                 <form class="search-form d-flex align-items-center" method="POST" action="#">
                     <input type="text" name="query" placeholder="Search" title="Enter search keyword">
@@ -59,20 +62,32 @@
                 </form>
             </div><!-- End Search Bar -->
 
+            <!-- BOTÓN DE BÚSQUEDA -->
+            <nav class="header-nav ms-auto">
+                <ul class="d-flex align-items-center">
 
-        </header><!-- End Header -->
+                    <li class="nav-item d-block d-lg-none">
+                        <a class="nav-link nav-icon search-bar-toggle " href="#">
+                            <i class="bi bi-search"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- End Search Icon-->
+        </header>
+        <!-- End Header -->
 
         <!-- ======= Sidebar ======= -->
         <aside id="sidebar" class="sidebar">
 
             <ul class="sidebar-nav" id="sidebar-nav">
-
                 <li class="nav-item">
-                    <a class="nav-link " href="index.html">
+                    <a class="nav-link collapsed" href="index.html">
                         <i class="bi-grid-fill"></i>
                         <span>MENÚ PRINCIPAL</span>
                     </a>
-                </li><!-- End Dashboard Nav -->
+                </li>
+                <!-- End Dashboard Nav -->
 
                 <li class="nav-heading">Entidades</li>
 
@@ -81,25 +96,28 @@
                         <i class="ri-t-shirt-2-fill"></i>
                         <span>Héroes</span>
                     </a>
-                </li><!-- End Profile Page Nav -->
+                </li>
+                <!-- End Profile Page Nav -->
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="pages-contact.html">
                         <i class="ri-skull-2-fill"></i>
                         <span>Enemigos</span>
                     </a>
-                </li><!-- End Contact Page Nav -->
+                </li>
+                <!-- End Contact Page Nav -->
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="pages-register.html">
                         <i class="ri-ink-bottle-fill"></i>
                         <span>Hechizos</span>
                     </a>
-                </li><!-- End Register Page Nav -->
-
+                </li>
+                <!-- End Register Page Nav -->
             </ul>
 
-        </aside><!-- End Sidebar-->
+        </aside>
+        <!-- End Sidebar-->
 
         <main id="main" class="main">
 
@@ -107,16 +125,19 @@
                 <div class="row">
 
                     <!-- Left side columns -->
-                    <div class="col-lg-8">
+                    <div class="container-fluid">
                         <div class="row">
 
                             <!-- Top Selling -->
                             <div class="col-12">
                                 <div class="card top-selling overflow-auto">
 
-                                    <div class="card-body pb-0">
-                                        <h5 class="card-title">Héroes</h5>
+                                    <div class="filter">
+                                        <a class="icon" href="#"><i class="btn btn-primary">Añadir Héroe</i></a>
+                                    </div>
 
+                                    <div class="card-body pb-0">
+                                        <h5 class="card-title">HÉROES</h5>
                                         <table class="table table-borderless">
                                             <thead>
                                                 <tr>
@@ -135,25 +156,42 @@
                                             </thead>
                                             <tbody>
                                                 <%
-                                                for (Heroe heroe: listaHeroes){
+                                                    for (Heroe heroe : listaHeroes) {
                                                 %>
                                                 <tr>
-                                                    <td class="fw-bold">Ut inventore ipsa voluptas nulla</td>
-                                                    <td><%=heroe.getNombre()%></td>
-                                                    <td><%=heroe.getEdad()%></td>
-                                                    <td><%=heroe.getGenero()%></td>
-                                                    <th><%=heroe.getClase()%></th>
-                                                    <th><%=heroe.getNivel()%></th>
-                                                    <th><%=heroe.getAtaque()%></th>
-                                                    <th><%=heroe.getPareja().getNombre()%></th>
-                                                    <th><%=heroe.getExperiencia()%></th>
+                                                    <td class="fw-bold"><%=heroe.getIdHeroe()%>
+                                                    </td>
+                                                    <td><%=heroe.getNombre()%>
+                                                    </td>
+                                                    <td><%=heroe.getEdad()%>
+                                                    </td>
+                                                    <td><%=heroe.getGenero().getNombreGenero()%>
+                                                    </td>
+                                                    <td><%=heroe.getClase()%>
+                                                    </td>
+                                                    <td><%=heroe.getNivel()%>
+                                                    </td>
+                                                    <td><%=heroe.getAtaque()%>
+                                                    </td>
+                                                    <td><%=heroe.getPareja().getNombre()%>
+                                                    </td>
+                                                    <td><%=heroe.getExperiencia()%>
+                                                    </td>
+                                                    <td>
+                                                        <a type="button">
+                                                            <i class="bx bxs-edit-alt"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a type="button">
+                                                            <i class="bx bxs-trash-alt"></i>
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                                 <%}%>
                                             </tbody>
                                         </table>
-
                                     </div>
-
                                 </div>
                             </div><!-- End Top Selling -->
 
