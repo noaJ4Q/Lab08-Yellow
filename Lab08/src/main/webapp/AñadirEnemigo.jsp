@@ -24,7 +24,7 @@
           <form method="post" action="<%=request.getContextPath()%>/MenuEnemigos?action=guardar">
             <div class="mb-3">
               <label for="nombre" class="form-label">Nombre del Enemigo</label>
-              <input type="text" class="form-control" id="nombre" placeholder="nombre" name="nombre">
+              <input type="text" class="form-control" id="nombre" name="nombre">
             </div>
             <div class="mb-3">
               <label for="claseEnemigo" class="form-label">Clase del Enemigo</label>
