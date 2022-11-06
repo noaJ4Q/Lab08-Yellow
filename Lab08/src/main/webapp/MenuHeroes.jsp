@@ -38,7 +38,7 @@
     <body style="background-color: #F9E64B;">
 
         <!-- ======= Header ======= -->
-        <header class="header fixed-top d-flex align-items-center" style="background-color: #FAFAFA;">
+        <header class="header fixed-top d-flex align-items-center" style="background-color: #FFF7EC;">
 
             <div class="d-flex align-items-center justify-content-between">
                 <a href="<%=request.getContextPath()%>/" class="logo d-flex align-items-center">
@@ -51,7 +51,7 @@
             <!-- BARRA DE BÚSQUEDA -->
             <div class="search-bar">
                 <form class="search-form d-flex align-items-center" method="POST" action="<%=request.getContextPath()%>/MenuHeroes?action=buscar">
-                    <input type="text" name="busqueda" placeholder="Buscar Héroe" value="">
+                    <input type="text" name="busqueda" placeholder="Buscar Héroe">
                     <button type="submit" title="Search"><i class="bi bi-search"></i></button>
                 </form>
             </div><!-- End Search Bar -->

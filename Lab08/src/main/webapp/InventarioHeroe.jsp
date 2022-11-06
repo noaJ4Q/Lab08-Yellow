@@ -40,7 +40,7 @@
     <body style="background-color: #F9E64B;">
 
         <!-- ======= Header ======= -->
-        <header class="header fixed-top d-flex align-items-center" style="background-color: #FAFAFA;">
+        <header class="header fixed-top d-flex align-items-center" style="background-color: #FFF7EC;">
 
             <div class="d-flex align-items-center justify-content-between">
                 <a href="<%=request.getContextPath()%>/" class="logo d-flex align-items-center">
@@ -52,9 +52,8 @@
 
             <!-- BARRA DE BÚSQUEDA -->
             <div class="search-bar">
-                <form class="search-form d-flex align-items-center" method="POST"
-                      action="<%=request.getContextPath()%>/MenuHeroes?action=buscar">
-                    <input type="text" name="busqueda" placeholder="Buscar Héroe" value="">
+                <form class="search-form d-flex align-items-center" method="POST" action="<%=request.getContextPath()%>/MenuHeroes?action=buscar">
+                    <input type="text" name="busqueda" placeholder="Buscar Héroe">
                     <button type="submit" title="Search"><i class="bi bi-search"></i></button>
                 </form>
             </div><!-- End Search Bar -->
@@ -124,10 +123,8 @@
         <!-- End Sidebar-->
 
         <main id="main" class="main">
-
             <section class="section dashboard">
                 <div class="row">
-
                     <!-- Left side columns -->
                     <div class="container-fluid">
                         <div class="row">
@@ -137,9 +134,7 @@
                                 <div class="card top-selling overflow-auto">
 
                                     <div class="filter">
-                                        <a class="icon"
-                                           href="<%=request.getContextPath()%>/MenuHeroes?action=crearObjeto"><i
-                                                class="btn btn-secondary">Añadir Objeto</i></a>
+                                        <a class="icon" href="<%=request.getContextPath()%>/MenuHeroes?action=crearObjeto&idHeroe=<%=listaInventario.get(1).getHeroe().getIdHeroe()%>"><i class="btn btn-secondary">Añadir Objeto</i></a>
                                     </div>
 
                                     <div class="card-body pb-0">
@@ -153,29 +148,33 @@
                                                     <th>Cantidad</th>
                                                     <th></th>
                                                     <th></th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <%
-                                                    for (Inventario inventario : listaInventario) {
+                                                    for (Inventario inventario: listaInventario){
                                                 %>
                                                 <tr>
-                                                    <td><%=inventario.getObjeto().getNombreObjeto()%>
-                                                    </td>
-                                                    <td><%=inventario.getObjeto().getEfectoUso()%>
-                                                    </td>
-                                                    <td><%=inventario.getObjeto().getPeso()%>
-                                                    </td>
-                                                    <td><%=inventario.getCantidad()%>
-                                                    </td>
-                                                    <a type="button"
-                                                       href="<%=request.getContextPath()%>/MenuHeroes?action=editarInventario&idH=<%=inventario.getHeroe().getIdHeroe()%>&idO=<%=inventario.getObjeto().getIdObjeto()%>">
-                                                        <i class="bx bxs-edit-alt"></i>
-                                                    </a>
+                                                    <td>
+                                                        <%=inventario.getObjeto().getNombreObjeto()%>
                                                     </td>
                                                     <td>
-                                                        <a type="button"
-                                                           href="<%=request.getContextPath()%>/MenuHeroes?action=borrarInventario&idH=<%=inventario.getHeroe().getIdHeroe()%>&idO=<%=inventario.getObjeto().getIdObjeto()%>">
+                                                        <%=inventario.getObjeto().getEfectoUso()%>
+                                                    </td>
+                                                    <td>
+                                                        <%=inventario.getObjeto().getPeso()%>
+                                                    </td>
+                                                    <td>
+                                                        <%=inventario.getCantidad()%>
+                                                    </td>
+                                                    <td>
+                                                        <a type="button" href="<%=request.getContextPath()%>/MenuHeroes?action=editarObjeto&idHeroe=<%=inventario.getHeroe().getIdHeroe()%>&idObjeto=<%=inventario.getObjeto().getIdObjeto()%>">
+                                                            <i class="bx bxs-edit-alt"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a type="button" href="<%=request.getContextPath()%>/MenuHeroes?action=borrarObjeto&idHeroe=<%=inventario.getHeroe().getIdHeroe()%>&idObjeto=<%=inventario.getObjeto().getIdObjeto()%>">
                                                             <i class="bx bxs-trash-alt"></i>
                                                         </a>
                                                     </td>

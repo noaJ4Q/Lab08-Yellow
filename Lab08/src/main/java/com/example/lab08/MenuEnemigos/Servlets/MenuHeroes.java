@@ -3,6 +3,7 @@ package com.example.lab08.MenuEnemigos.Servlets;
 import com.example.lab08.MenuEnemigos.Beans.Genero;
 import com.example.lab08.MenuEnemigos.Beans.Heroe;
 import com.example.lab08.MenuEnemigos.Beans.Inventario;
+import com.example.lab08.MenuEnemigos.Beans.Objeto;
 import com.example.lab08.MenuEnemigos.Daos.DaoHeroe;
 import com.example.lab08.MenuEnemigos.Daos.DaoInventario;
 import jakarta.servlet.*;
@@ -19,9 +20,11 @@ public class MenuHeroes extends HttpServlet {
 
         String action = request.getParameter("action") == null? "listar" : request.getParameter("action");
         DaoHeroe daoHeroe = new DaoHeroe();
+        DaoInventario daoInventario = new DaoInventario();
         Heroe heroe;
         RequestDispatcher vista;
         String idHeroe;
+        String idObjeto;
         ArrayList<Heroe> listaParejasDisponibles;
 
         switch (action){
@@ -46,7 +49,7 @@ public class MenuHeroes extends HttpServlet {
 
             case "inventario":
 
-                DaoInventario daoInventario = new DaoInventario();
+                daoInventario = new DaoInventario();
                 idHeroe = request.getParameter("idHeroe");
 
                 ArrayList<Inventario> listaInventario = daoInventario.obtenerInventario(idHeroe);
@@ -76,6 +79,31 @@ public class MenuHeroes extends HttpServlet {
                 response.sendRedirect(request.getContextPath()+"/MenuHeroes");
 
                 break;
+
+            case "crearObjeto":
+
+                idHeroe = request.getParameter("idHeroe");
+                request.setAttribute("idHeroe", idHeroe);
+
+                vista = request.getRequestDispatcher("AñadirObjeto.jsp");
+                vista.forward(request, response);
+
+                break;
+
+            case "editarObjeto":
+
+                idHeroe = request.getParameter("idHeroe");
+                idObjeto = request.getParameter("idObjeto");
+                int cantidad = daoInventario.obtenerCantidad(Integer.parseInt(idHeroe), Integer.parseInt(idObjeto));
+
+                request.setAttribute("idHeroe", idHeroe);
+                request.setAttribute("idObjeto", idObjeto);
+                request.setAttribute("cantidad", cantidad);
+
+                vista = request.getRequestDispatcher("EditarObjeto.jsp");
+                vista.forward(request, response);
+
+                break;
         }
     }
 
@@ -84,11 +112,15 @@ public class MenuHeroes extends HttpServlet {
 
         String action = request.getParameter("action");
         DaoHeroe daoHeroe = new DaoHeroe();
+        DaoInventario daoInventario = new DaoInventario();
         RequestDispatcher vista;
         Heroe heroe;
+        String idHeroe;
         Genero genero;
         Heroe pareja;
+        Inventario inventario;
         int nivel;
+        int cantidad;
         float experiencia;
 
         switch (action){
@@ -185,6 +217,57 @@ public class MenuHeroes extends HttpServlet {
                 }
 
                 response.sendRedirect(request.getContextPath()+"/MenuHeroes");
+
+                break;
+
+            case "guardarObjeto":
+
+                boolean disponible = true;
+
+                idHeroe = request.getParameter("idHeroe");
+                cantidad = Integer.parseInt(request.getParameter("cantidad"));
+
+                String nombreObjeto = request.getParameter("nombre"); // SE DEBE VALIDAR QUE NO SEA UN OBJETO REPETIDO DEL HEROE
+
+                // ------ VALIDACION DE QUE HEROE NO REGISTRE MISMO OBJETO DOS VECES ---------
+                ArrayList<Inventario> listaObjetosHeroe = daoInventario.obtenerInventario(idHeroe);
+
+                for (Inventario inv:listaObjetosHeroe){
+                    if (nombreObjeto.equalsIgnoreCase(inv.getObjeto().getNombreObjeto())){
+                        disponible = false;
+                    }
+                }
+
+                if(disponible){ // " OBJETO DISPONIBLE "
+                    ArrayList<Objeto> listaObjetos = daoInventario.obtenerlistaObjetos();
+                    for (Objeto objeto:listaObjetos){
+                        if (nombreObjeto.equalsIgnoreCase(objeto.getNombreObjeto())){ // OBJETO SE ENCUENTRA EN CATALOGO DE OBJETOS
+                            int idObjeto = objeto.getIdObjeto();
+                            daoInventario.guardarObjeto(Integer.parseInt(idHeroe), idObjeto, cantidad);
+
+                            response.sendRedirect(request.getContextPath()+"/MenuHeroes?action=inventario&idHeroe="+idHeroe);
+                        }
+                        else { // OBJETO NO SE ENCUENTRA EN CATALOGO DE OBJETOS
+                            // VISTA CON ERROR
+                        }
+                    }
+                }else { // OBJETO REPETIDO
+                    // VISTA CON ERROR
+                }
+
+                // -----------------------------------------------------------------------------
+
+                break;
+
+            case "actualizarObjeto":
+
+                cantidad = Integer.parseInt(request.getParameter("cantidad"));
+                idHeroe = request.getParameter("idHeroe");
+                String idObjeto = request.getParameter("idObjeto");
+
+                daoInventario.actualizarObjeto(Integer.parseInt(idHeroe), Integer.parseInt(idObjeto), cantidad);
+
+                response.sendRedirect(request.getContextPath()+"/MenuHeroes?action=inventario&idHeroe="+idHeroe);
 
                 break;
         }

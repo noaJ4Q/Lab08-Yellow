@@ -52,9 +52,9 @@
             <!-- End Logo -->
 
             <!-- BARRA DE BÚSQUEDA -->
-            <div class="search-bar">
+            <div class="search-bar align-items-center">
                 <form class="search-form d-flex align-items-center" method="POST" action="<%=request.getContextPath()%>/MenuHeroes?action=buscar">
-                    <input type="text" name="busqueda" placeholder="Buscar Héroe" value="">
+                    <input type="text" name="busqueda" placeholder="Buscar Héroe">
                     <button type="submit" title="Search"><i class="bi bi-search"></i></button>
                 </form>
             </div><!-- End Search Bar -->
