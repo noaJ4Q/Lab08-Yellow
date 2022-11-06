@@ -51,7 +51,7 @@
             <!-- BARRA DE BÚSQUEDA -->
             <div class="search-bar">
                 <form class="search-form d-flex align-items-center" method="POST" action="<%=request.getContextPath()%>/MenuHeroes?action=buscar">
-                    <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+                    <input type="text" name="busqueda" placeholder="Buscar Héroe" value="">
                     <button type="submit" title="Search"><i class="bi bi-search"></i></button>
                 </form>
             </div><!-- End Search Bar -->
@@ -76,7 +76,7 @@
 
             <ul class="sidebar-nav" id="sidebar-nav">
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="index.html">
+                    <a class="nav-link collapsed" href="<%=request.getContextPath()%>/">
                         <i class="bi-grid-fill"></i>
                         <span>MENÚ PRINCIPAL</span>
                     </a>
@@ -86,7 +86,7 @@
                 <li class="nav-heading">Entidades</li>
 
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="users-profile.html">
+                    <a class="nav-link collapsed" href="<%=request.getContextPath()%>/MenuHeroes">
                         <i class="ri-t-shirt-2-fill"></i>
                         <span>Héroes</span>
                     </a>
@@ -94,7 +94,7 @@
                 <!-- End Profile Page Nav -->
 
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="pages-contact.html">
+                    <a class="nav-link collapsed" href="<%=request.getContextPath()%>/MenuEnemigos">
                         <i class="ri-skull-2-fill"></i>
                         <span>Enemigos</span>
                     </a>
@@ -105,6 +105,13 @@
                     <a class="nav-link collapsed" href="pages-register.html">
                         <i class="ri-ink-bottle-fill"></i>
                         <span>Hechizos</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="pages-register.html">
+                        <i class="ri-book-fill"></i>
+                        <span>Objetos</span>
                     </a>
                 </li>
                 <!-- End Register Page Nav -->

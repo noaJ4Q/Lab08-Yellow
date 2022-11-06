@@ -33,22 +33,12 @@
 
         <!-- ======= Header ======= -->
         <header class="header fixed-top d-flex align-items-center" style="background-color: #FAFAFA;">
-
             <div class="d-flex align-items-center justify-content-between">
-                <a class="logo d-flex align-items-center">
-                    <img src="assets/img/logo.png" alt="">
+                <a href="<%=request.getContextPath()%>/" class="logo d-flex align-items-center">
                     <span class="d-none d-lg-block">Wiki Fantástica</span>
                 </a>
                 <i class="bi bi-list toggle-sidebar-btn"></i>
             </div><!-- End Logo -->
-
-            <div class="search-bar">
-                <form class="search-form d-flex align-items-center" method="POST" action="#">
-                    <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-                    <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-                </form>
-            </div><!-- End Search Bar -->
-
 
         </header><!-- End Header -->
 
@@ -56,13 +46,13 @@
         <aside id="sidebar" class="sidebar">
 
             <ul class="sidebar-nav" id="sidebar-nav">
-
                 <li class="nav-item">
-                    <a class="nav-link " href="<%=request.getContextPath()%>">
+                    <a class="nav-link collapsed" href="<%=request.getContextPath()%>/">
                         <i class="bi-grid-fill"></i>
                         <span>MENÚ PRINCIPAL</span>
                     </a>
-                </li><!-- End Dashboard Nav -->
+                </li>
+                <!-- End Dashboard Nav -->
 
                 <li class="nav-heading">Entidades</li>
 
@@ -71,25 +61,35 @@
                         <i class="ri-t-shirt-2-fill"></i>
                         <span>Héroes</span>
                     </a>
-                </li><!-- End Profile Page Nav -->
+                </li>
+                <!-- End Profile Page Nav -->
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="<%=request.getContextPath()%>/MenuEnemigos">
                         <i class="ri-skull-2-fill"></i>
                         <span>Enemigos</span>
                     </a>
-                </li><!-- End Contact Page Nav -->
+                </li>
+                <!-- End Contact Page Nav -->
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="pages-register.html">
                         <i class="ri-ink-bottle-fill"></i>
                         <span>Hechizos</span>
                     </a>
-                </li><!-- End Register Page Nav -->
+                </li>
 
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="pages-register.html">
+                        <i class="ri-book-fill"></i>
+                        <span>Objetos</span>
+                    </a>
+                </li>
+                <!-- End Register Page Nav -->
             </ul>
 
-        </aside><!-- End Sidebar-->
+        </aside>
+        <!-- End Sidebar-->
 
         <main id="main" class="main">
 

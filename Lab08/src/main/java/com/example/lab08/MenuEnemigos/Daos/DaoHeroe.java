@@ -111,8 +111,8 @@ public class DaoHeroe {
         }
 
         String url = "jdbc:mysql://localhost:3306/yellow";
-        String sql = "select h.idHeroe, h.nombre, h.edad, g.nombre, h.clase, h.nivel, h.ataque, h.idPareja from heroe h \n" +
-                "inner join genero g on (g.idGenero = h.idGenero)" +
+        String sql = "select idHeroe, nombre, edad, idGenero, clase, nivel, ataque, idPareja, experiencia \n" +
+                "from heroe \n" +
                 "where idHeroe = ?";
         Heroe heroe = null;
 
@@ -130,7 +130,7 @@ public class DaoHeroe {
                     heroe.setEdad(rs.getString(3));
 
                     Genero genero = new Genero();
-                    genero.setNombreGenero(rs.getString(4));
+                    genero.setIdGenero(rs.getString(4));
                     heroe.setGenero(genero);
 
                     heroe.setClase(rs.getString(5));
@@ -150,6 +150,62 @@ public class DaoHeroe {
             throw new RuntimeException();
         }
         return heroe;
+    }
+
+    public ArrayList<Heroe> buscarPorNombre(String nombre){
+        ArrayList<Heroe> listaHeroes = new ArrayList<>();
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String url = "jdbc:mysql://localhost:3306/yellow";
+        String sql = "select h.idHeroe, h.nombre,  h.edad, g.nombre as 'genero', " +
+                "h.clase, h.nivel, h.ataque, p.nombre as 'pareja', h.experiencia " +
+                "from heroe h " +
+                "inner join genero g on (h.idGenero = g.idGenero) " +
+                "left join heroe p on (h.idPareja = p.idHeroe) " +
+                "where lower(h.nombre) like ?";
+
+        try (Connection conn = DriverManager.getConnection(url, "root", "root");
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+
+            pstmt.setString(1, "%"+nombre+"%");
+
+            try (ResultSet rs = pstmt.executeQuery()){
+                while (rs.next()){
+
+                    Heroe heroe = new Heroe();
+
+                    heroe.setIdHeroe(rs.getInt(1));
+                    heroe.setNombre(rs.getString(2));
+                    heroe.setEdad(rs.getString(3));
+
+                    Genero genero = new Genero();
+                    genero.setNombreGenero(rs.getString(4));
+                    heroe.setGenero(genero);
+
+                    heroe.setClase(rs.getString(5));
+                    heroe.setNivel(rs.getInt(6));
+                    heroe.setAtaque(rs.getInt(7));
+
+                    Heroe pareja = new Heroe();
+                    pareja.setNombre(rs.getString(8) == null ? "-" : rs.getString(8));
+                    heroe.setPareja(pareja);
+
+                    heroe.setExperiencia(rs.getFloat(9));
+
+                    listaHeroes.add(heroe);
+                }
+            }
+
+        }catch (SQLException e){
+            throw new RuntimeException();
+        }
+
+        return listaHeroes;
     }
 
     public void actualizarPareja(int idHeroe, int idParejaNueva){

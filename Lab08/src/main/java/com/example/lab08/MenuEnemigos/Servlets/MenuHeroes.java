@@ -72,6 +72,7 @@ public class MenuHeroes extends HttpServlet {
 
         String action = request.getParameter("action");
         DaoHeroe daoHeroe = new DaoHeroe();
+        RequestDispatcher vista;
         Heroe heroe;
         Genero genero;
         Heroe pareja;
@@ -79,6 +80,17 @@ public class MenuHeroes extends HttpServlet {
         float experiencia;
 
         switch (action){
+            case "buscar":
+
+                String busqueda = request.getParameter("busqueda");
+                ArrayList<Heroe> listaHeroes = daoHeroe.buscarPorNombre(busqueda);
+
+                request.setAttribute("listaHeroes", listaHeroes);
+                vista = request.getRequestDispatcher("MenuHeroes.jsp");
+                vista.forward(request, response);
+
+                break;
+
             case "guardar":
 
                 heroe = new Heroe();
@@ -111,9 +123,11 @@ public class MenuHeroes extends HttpServlet {
 
                 int idHeroeGuardado = daoHeroe.guardarHeroe(heroe);
 
-                if (idHeroeGuardado != 0){ // TIENE PAREJA
+                if (idHeroeGuardado != 0){ // SI TIENE PAREJA SE ACTUALIZA DICHA PAREJA
                     daoHeroe.actualizarPareja(heroe.getPareja().getIdHeroe(), idHeroeGuardado);
                 }
+
+                response.sendRedirect(request.getContextPath()+"/MenuHeroes");
 
                 break;
 
