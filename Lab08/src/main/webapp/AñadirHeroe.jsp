@@ -1,11 +1,5 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.example.lab08.MenuEnemigos.Beans.Heroe" %><%--
-  Created by IntelliJ IDEA.
-  User: noqe2
-  Date: 05/11/2022
-  Time: 13:01
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.example.lab08.MenuEnemigos.Beans.Heroe" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     ArrayList<Heroe> listaParejas = (ArrayList<Heroe>) request.getAttribute("listaParejas");

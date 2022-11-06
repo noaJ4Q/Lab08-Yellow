@@ -76,7 +76,7 @@
 
             <ul class="sidebar-nav" id="sidebar-nav">
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="index.html">
+                    <a class="nav-link collapsed" href="<%=request.getContextPath()%>/">
                         <i class="bi-grid-fill"></i>
                         <span>MENÚ PRINCIPAL</span>
                     </a>
@@ -86,7 +86,7 @@
                 <li class="nav-heading">Entidades</li>
 
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="users-profile.html">
+                    <a class="nav-link collapsed" href="<%=request.getContextPath()%>/MenuHeroes" >
                         <i class="ri-t-shirt-2-fill"></i>
                         <span>Héroes</span>
                     </a>
@@ -94,7 +94,7 @@
                 <!-- End Profile Page Nav -->
 
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="pages-contact.html">
+                    <a class="nav-link collapsed" href="<%=request.getContextPath()%>/MenuEnemigos">
                         <i class="ri-skull-2-fill"></i>
                         <span>Enemigos</span>
                     </a>

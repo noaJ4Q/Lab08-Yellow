@@ -75,7 +75,7 @@
 
             <ul class="sidebar-nav" id="sidebar-nav">
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="<%=request.getContextPath()%>">
+                    <a class="nav-link collapsed" href="<%=request.getContextPath()%>/"> <!--para que lleve a la ruta raiz-->
                         <i class="bi-grid-fill"></i>
                         <span>MENÚ PRINCIPAL</span>
                     </a>
@@ -171,8 +171,7 @@
                                                         </a>
                                                     </td>
                                                     <td>
-                                                        <a type="button" class="btn btn-danger"
-                                                           onclick="return confirm('¿Estas seguro(a) que deseas borrar?')"
+                                                        <a type="button" onclick="return confirm('¿Estas seguro(a) que deseas borrar?')"
                                                            href="<%=request.getContextPath()%>/MenuEnemigos?action=borrar&id=<%=enemigo.getIdEnemigo()%>">
                                                             <i class="bx bxs-trash-alt"></i>
                                                         </a>

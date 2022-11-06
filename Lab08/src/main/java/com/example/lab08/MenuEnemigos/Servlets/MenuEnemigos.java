@@ -52,6 +52,15 @@ public class MenuEnemigos extends HttpServlet {
                     vista.forward(request,response);
                 }
              break;
+
+            case "borrar":
+                String idEnemigo1Str = request.getParameter("id");
+                int idEnemigo1 = Integer.parseInt(idEnemigo1Str);
+                //borrar es void , entonces:
+                daoEnemigo.borrarEnemigo(idEnemigo1);
+
+                response.sendRedirect(request.getContextPath()+"/MenuEnemigos");
+                break;
         }
     }
 

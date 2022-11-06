@@ -58,7 +58,7 @@
             <ul class="sidebar-nav" id="sidebar-nav">
 
                 <li class="nav-item">
-                    <a class="nav-link " href="<%=request.getContextPath()%>">
+                    <a class="nav-link " href="<%=request.getContextPath()%>/">
                         <i class="bi-grid-fill"></i>
                         <span>MENÚ PRINCIPAL</span>
                     </a>

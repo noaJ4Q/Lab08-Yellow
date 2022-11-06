@@ -73,7 +73,7 @@ public class DaoEnemigo {
         String user = "root";
         String password = "root";
         String url = "jdbc:mysql://localhost:3306/yellow";
-        String sql = "select * from enemigo e" +
+        String sql = "select * from enemigo e " +
                 "left join clase c on e.idClase = c.idClase " +
                 "left join genero g on e.idGenero = g.idGenero" +
                 "where e.idEnemigo= ?";
@@ -147,4 +147,27 @@ public class DaoEnemigo {
 
     }
 
+    public void borrarEnemigo(int idEnemigo){
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        }catch (ClassNotFoundException e){
+            throw new RuntimeException(e);
+        }
+
+        String user = "root";
+        String password = "root";
+        String url = "jdbc:mysql://localhost:3306/yellow";
+        String sql = "delete from enemigo where idEnemigo = ?";
+
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setInt(1, idEnemigo);
+
+            pstmt.executeUpdate();
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
+    }
 }
