@@ -53,11 +53,10 @@
 
             <!-- BARRA DE BÚSQUEDA -->
             <div class="search-bar">
-                <for class="search-form d-flex align-items-center" method="POST"
-                     action="<%=request.getContextPath()%>/MenuHeroes?action=buscar">
-                    <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+                <form class="search-form d-flex align-items-center" method="POST" action="<%=request.getContextPath()%>/MenuHeroes?action=buscar">
+                    <input type="text" name="busqueda" placeholder="Buscar Héroe" value="">
                     <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-                </for>
+                </form>
             </div><!-- End Search Bar -->
 
             <!-- BOTÓN DE BÚSQUEDA -->

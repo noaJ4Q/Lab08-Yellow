@@ -34,7 +34,7 @@ public class MenuHeroes extends HttpServlet {
 
             case "crear":
 
-                listaParejasDisponibles = daoHeroe.obtenerParejasDisponibles();
+                listaParejasDisponibles = daoHeroe.obtenerParejasDisponibles(0);
 
                 request.setAttribute("listaParejas", listaParejasDisponibles);
                 vista = request.getRequestDispatcher("AñadirHeroe.jsp");
@@ -45,7 +45,7 @@ public class MenuHeroes extends HttpServlet {
             case "editar":
                 idHeroe = request.getParameter("idHeroe");
                 heroe = daoHeroe.buscarPorId(idHeroe);
-                listaParejasDisponibles = daoHeroe.obtenerParejasDisponibles();
+                listaParejasDisponibles = daoHeroe.obtenerParejasDisponibles(heroe.getIdHeroe());
 
                 request.setAttribute("heroeEditar", heroe);
                 request.setAttribute("listaParejas", listaParejasDisponibles);
@@ -63,8 +63,6 @@ public class MenuHeroes extends HttpServlet {
 
                 break;
         }
-
-
     }
 
     @Override
@@ -134,6 +132,7 @@ public class MenuHeroes extends HttpServlet {
             case "actualizar":
 
                 heroe = new Heroe();
+                heroe.setIdHeroe(Integer.parseInt(request.getParameter("idHeroe")));
                 heroe.setNombre(request.getParameter("nombre"));
                 heroe.setEdad(request.getParameter("edad"));
 
@@ -161,7 +160,15 @@ public class MenuHeroes extends HttpServlet {
                 pareja.setIdHeroe(Integer.parseInt(request.getParameter("idPareja")));
                 heroe.setPareja(pareja);
 
-                daoHeroe.actualizarHeroe(heroe);
+                Heroe exPareja = daoHeroe.buscarPareja(heroe.getIdHeroe()); // UTILIZA PARAMETRO idPareja PARA HALLAR EXPAREJA
+                daoHeroe.actualizarHeroe(heroe); // ACTUALIZO idPareja = null
+
+                if (heroe.getPareja().getIdHeroe()==0){ // ROMPE RELACION CON PAREJA
+                    daoHeroe.actualizarPareja(exPareja.getIdHeroe(), 0);
+                }
+                else {
+                    daoHeroe.actualizarPareja(heroe.getPareja().getIdHeroe(), heroe.getIdHeroe());
+                }
 
                 response.sendRedirect(request.getContextPath()+"/MenuHeroes");
 
