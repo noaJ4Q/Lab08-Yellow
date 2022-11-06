@@ -212,7 +212,7 @@
                                                         <option value="<%=h.getIdHeroe()%>"><%=h.getIdHeroe()%>
                                                         </option>
                                                         <%}%>
-                                                        <option value="0">Sin pareja</option>
+                                                        <option value="0">0 (Sin pareja)</option>
                                                     </select>
                                                 </div>
                                             </div>

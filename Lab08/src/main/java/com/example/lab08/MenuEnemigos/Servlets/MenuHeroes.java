@@ -2,7 +2,9 @@ package com.example.lab08.MenuEnemigos.Servlets;
 
 import com.example.lab08.MenuEnemigos.Beans.Genero;
 import com.example.lab08.MenuEnemigos.Beans.Heroe;
+import com.example.lab08.MenuEnemigos.Beans.Inventario;
 import com.example.lab08.MenuEnemigos.Daos.DaoHeroe;
+import com.example.lab08.MenuEnemigos.Daos.DaoInventario;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -38,6 +40,18 @@ public class MenuHeroes extends HttpServlet {
 
                 request.setAttribute("listaParejas", listaParejasDisponibles);
                 vista = request.getRequestDispatcher("AñadirHeroe.jsp");
+                vista.forward(request, response);
+
+                break;
+
+            case "inventario":
+
+                DaoInventario daoInventario = new DaoInventario();
+                idHeroe = request.getParameter("idHeroe");
+
+                ArrayList<Inventario> listaInventario = daoInventario.obtenerInventario(idHeroe);
+                request.setAttribute("listaInventario", listaInventario);
+                vista = request.getRequestDispatcher("InventarioHeroe.jsp");
                 vista.forward(request, response);
 
                 break;
