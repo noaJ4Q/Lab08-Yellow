@@ -1,7 +1,14 @@
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="com.example.lab08.MenuEnemigos.Beans.Heroe" %>
+<%@ page import="java.util.ArrayList" %><%--
+  Created by IntelliJ IDEA.
+  User: noqe2
+  Date: 05/11/2022
+  Time: 16:20
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    Heroe heroe = (Heroe) request.getAttribute("heroeEditar");
     ArrayList<Heroe> listaParejas = (ArrayList<Heroe>) request.getAttribute("listaParejas");
 %>
 <html>
@@ -9,7 +16,7 @@
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-        <title>Añadir Héroe / Wiki Fantástica</title>
+        <title>Editar Héroe / Wiki Fantástica</title>
 
         <!-- Favicons -->
         <link href="assets/img/favicon.png" rel="icon">
@@ -46,7 +53,8 @@
 
             <!-- BARRA DE BÚSQUEDA -->
             <div class="search-bar">
-                <for class="search-form d-flex align-items-center" method="POST" action="<%=request.getContextPath()%>/MenuHeroes?action=buscar">
+                <for class="search-form d-flex align-items-center" method="POST"
+                     action="<%=request.getContextPath()%>/MenuHeroes?action=buscar">
                     <input type="text" name="query" placeholder="Search" title="Enter search keyword">
                     <button type="submit" title="Search"><i class="bi bi-search"></i></button>
                 </for>
@@ -130,14 +138,19 @@
                                 <div class="card top-selling overflow-auto">
 
                                     <div class="card-body pb-0">
-                                        <h5 class="card-title">AÑADIR HÉROE</h5>
-                                        <form method="post" action="<%=request.getContextPath()%>/MenuHeroes?action=guardar">
+                                        <h5 class="card-title">EDITAR HÉROE</h5>
+                                        <form method="post"
+                                              action="<%=request.getContextPath()%>/MenuHeroes?action=actualizar">
+
+                                            <input name="idHeroe" type="hidden" class="form-control" id="idHeroe"
+                                                   value="<%=heroe.getIdHeroe()%>">
 
                                             <div class="row mb-3">
                                                 <label for="nombre"
                                                        class="col-md-4 col-lg-3 col-form-label">Nombre</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="nombre" type="text" class="form-control" id="nombre">
+                                                    <input name="nombre" type="text" class="form-control" id="nombre"
+                                                           value="<%=heroe.getNombre()%>">
                                                 </div>
                                             </div>
 
@@ -145,7 +158,8 @@
                                                 <label for="edad"
                                                        class="col-md-4 col-lg-3 col-form-label">Edad</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="edad" type="text" class="form-control" id="edad">
+                                                    <input name="edad" type="text" class="form-control" id="edad"
+                                                           value="<%=heroe.getEdad()%>">
                                                 </div>
                                             </div>
 
@@ -154,7 +168,7 @@
                                                        class="col-md-4 col-lg-3 col-form-label">Género</label>
                                                 <div class="col-md-8 col-lg-9">
                                                     <select class="form-select" id="genero" name="genero">
-                                                        <option selected>Seleccione un género</option>
+                                                        <option value="<%=heroe.getGenero().getIdGenero()%>" selected>Seleccione un género</option>
                                                         <option value="M">Masculino</option>
                                                         <option value="F">Femenino</option>
                                                         <option value="O">Otro</option>
@@ -166,7 +180,7 @@
                                                 <label for="clase"
                                                        class="col-md-4 col-lg-3 col-form-label">Clase</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="clase" type="text" class="form-control" id="clase">
+                                                    <input name="clase" type="text" class="form-control" id="clase" value="<%=heroe.getClase()%>">
                                                 </div>
                                             </div>
 
@@ -174,7 +188,7 @@
                                                 <label for="nivel"
                                                        class="col-md-4 col-lg-3 col-form-label">Nivel</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="nivel" type="text" class="form-control" id="nivel">
+                                                    <input name="nivel" type="text" class="form-control" id="nivel" value="<%=heroe.getNivel()%>">
                                                 </div>
                                             </div>
 
@@ -182,20 +196,22 @@
                                                 <label for="ataque"
                                                        class="col-md-4 col-lg-3 col-form-label">Ataque</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="ataque" type="text" class="form-control" id="ataque">
+                                                    <input name="ataque" type="text" class="form-control" id="ataque" value="<%=heroe.getAtaque()%>">
                                                 </div>
                                             </div>
 
                                             <div class="row mb-3">
                                                 <label for="idPareja"
-                                                       class="col-md-4 col-lg-3 col-form-label">Pareja (Opciones disponibles)</label>
+                                                       class="col-md-4 col-lg-3 col-form-label">Pareja (Opciones
+                                                    disponibles)</label>
                                                 <div class="col-md-8 col-lg-9">
                                                     <select class="form-select" id="idPareja" name="idPareja">
-                                                        <option selected>Seleccione el ID de la pareja</option>
+                                                        <option value="<%=heroe.getPareja().getIdHeroe()%>" selected>Seleccione el ID de la pareja</option>
                                                         <%
-                                                            for (Heroe heroe: listaParejas){
+                                                            for (Heroe h : listaParejas) {
                                                         %>
-                                                        <option value="<%=heroe.getIdHeroe()%>"><%=heroe.getIdHeroe()%></option>
+                                                        <option value="<%=h.getIdHeroe()%>"><%=h.getIdHeroe()%>
+                                                        </option>
                                                         <%}%>
                                                         <option value="0">Sin pareja</option>
                                                     </select>
@@ -204,7 +220,7 @@
 
                                             <div class="row mb-3">
                                                 <div class="d-grid gap-2 col-6 col-lg-4 col-xl-3 mx-auto">
-                                                    <button class="btn btn-secondary" type="submit">Añadir</button>
+                                                    <button class="btn btn-secondary" type="submit">Guardar</button>
                                                 </div>
                                             </div>
 

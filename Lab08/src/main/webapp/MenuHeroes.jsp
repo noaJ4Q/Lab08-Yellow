@@ -41,7 +41,7 @@
         <header class="header fixed-top d-flex align-items-center" style="background-color: #FAFAFA;">
 
             <div class="d-flex align-items-center justify-content-between">
-                <a href="index.html" class="logo d-flex align-items-center">
+                <a href="<%=request.getContextPath()%>/" class="logo d-flex align-items-center">
                     <span class="d-none d-lg-block">Wiki Fantástica</span>
                 </a>
                 <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -50,8 +50,8 @@
 
             <!-- BARRA DE BÚSQUEDA -->
             <div class="search-bar">
-                <form class="search-form d-flex align-items-center" method="POST" action="#">
-                    <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+                <form class="search-form d-flex align-items-center" method="POST" action="<%=request.getContextPath()%>/MenuHeroes?action=buscar">
+                    <input type="text" name="busqueda" placeholder="Buscar Héroe" value="">
                     <button type="submit" title="Search"><i class="bi bi-search"></i></button>
                 </form>
             </div><!-- End Search Bar -->
@@ -86,7 +86,7 @@
                 <li class="nav-heading">Entidades</li>
 
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="<%=request.getContextPath()%>/MenuHeroes" >
+                    <a class="nav-link collapsed" href="<%=request.getContextPath()%>/MenuHeroes">
                         <i class="ri-t-shirt-2-fill"></i>
                         <span>Héroes</span>
                     </a>
@@ -105,6 +105,13 @@
                     <a class="nav-link collapsed" href="pages-register.html">
                         <i class="ri-ink-bottle-fill"></i>
                         <span>Hechizos</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="pages-register.html">
+                        <i class="ri-book-fill"></i>
+                        <span>Objetos</span>
                     </a>
                 </li>
                 <!-- End Register Page Nav -->
@@ -146,6 +153,7 @@
                                                     <th>Experiencia Inicial</th>
                                                     <th></th>
                                                     <th></th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -172,12 +180,17 @@
                                                     <td><%=heroe.getExperiencia()%>
                                                     </td>
                                                     <td>
-                                                        <a type="button" href="<%=request.getContextPath()%>/MenuHeroes?action=editar">
+                                                        <a type="button" href="<%=request.getContextPath()%>/MenuHeroes?action=inventario&idHeroe=<%=heroe.getIdHeroe()%>">
+                                                            <i class="bx bxs-box"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a type="button" href="<%=request.getContextPath()%>/MenuHeroes?action=editar&idHeroe=<%=heroe.getIdHeroe()%>">
                                                             <i class="bx bxs-edit-alt"></i>
                                                         </a>
                                                     </td>
                                                     <td>
-                                                        <a type="button" href="<%=request.getContextPath()%>/MenuHeroes?action=borrar&id=<%=heroe.getIdHeroe()%>">
+                                                        <a type="button" href="<%=request.getContextPath()%>/MenuHeroes?action=borrar&idHeroe=<%=heroe.getIdHeroe()%>">
                                                             <i class="bx bxs-trash-alt"></i>
                                                         </a>
                                                     </td>

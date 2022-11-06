@@ -17,7 +17,10 @@ public class MenuHeroes extends HttpServlet {
 
         String action = request.getParameter("action") == null? "listar" : request.getParameter("action");
         DaoHeroe daoHeroe = new DaoHeroe();
+        Heroe heroe;
         RequestDispatcher vista;
+        String idHeroe;
+        ArrayList<Heroe> listaParejasDisponibles;
 
         switch (action){
             case "listar":
@@ -31,7 +34,7 @@ public class MenuHeroes extends HttpServlet {
 
             case "crear":
 
-                ArrayList<Heroe> listaParejasDisponibles = daoHeroe.obtenerParejasDisponibles();
+                listaParejasDisponibles = daoHeroe.obtenerParejasDisponibles();
 
                 request.setAttribute("listaParejas", listaParejasDisponibles);
                 vista = request.getRequestDispatcher("AñadirHeroe.jsp");
@@ -39,8 +42,21 @@ public class MenuHeroes extends HttpServlet {
 
                 break;
 
+            case "editar":
+                idHeroe = request.getParameter("idHeroe");
+                heroe = daoHeroe.buscarPorId(idHeroe);
+                listaParejasDisponibles = daoHeroe.obtenerParejasDisponibles();
+
+                request.setAttribute("heroeEditar", heroe);
+                request.setAttribute("listaParejas", listaParejasDisponibles);
+
+                vista = request.getRequestDispatcher("EditarHeroe.jsp");
+                vista.forward(request, response);
+
+                break;
+
             case "borrar":
-                String idHeroe = request.getParameter("id");
+                idHeroe = request.getParameter("idHeroe");
                 daoHeroe.borrarHeroe(idHeroe);
 
                 response.sendRedirect(request.getContextPath()+"/MenuHeroes");
@@ -56,24 +72,41 @@ public class MenuHeroes extends HttpServlet {
 
         String action = request.getParameter("action");
         DaoHeroe daoHeroe = new DaoHeroe();
+        RequestDispatcher vista;
+        Heroe heroe;
+        Genero genero;
+        Heroe pareja;
+        int nivel;
+        float experiencia;
 
         switch (action){
+            case "buscar":
+
+                String busqueda = request.getParameter("busqueda");
+                ArrayList<Heroe> listaHeroes = daoHeroe.buscarPorNombre(busqueda);
+
+                request.setAttribute("listaHeroes", listaHeroes);
+                vista = request.getRequestDispatcher("MenuHeroes.jsp");
+                vista.forward(request, response);
+
+                break;
+
             case "guardar":
 
-                Heroe heroe = new Heroe();
+                heroe = new Heroe();
                 heroe.setNombre(request.getParameter("nombre"));
                 heroe.setEdad(request.getParameter("edad"));
 
-                Genero genero = new Genero();
+                genero = new Genero();
                 genero.setIdGenero(request.getParameter("genero"));
                 heroe.setGenero(genero);
 
                 heroe.setClase(request.getParameter("clase"));
-                int nivel = Integer.parseInt(request.getParameter("nivel"));
+                nivel = Integer.parseInt(request.getParameter("nivel"));
                 heroe.setNivel(nivel);
                 heroe.setAtaque(Integer.parseInt(request.getParameter("ataque")));
 
-                float experiencia = 0;
+                experiencia = 0;
                 if (nivel>0 && nivel <=15){
                     experiencia = (nivel*nivel*nivel)*(24+((float)nivel+1)/3)/50;
                 } else if (nivel>=16 && nivel<=35) {
@@ -84,15 +117,53 @@ public class MenuHeroes extends HttpServlet {
 
                 heroe.setExperiencia(experiencia);
 
-                Heroe pareja = new Heroe();
+                pareja = new Heroe();
                 pareja.setIdHeroe(Integer.parseInt(request.getParameter("idPareja")));
                 heroe.setPareja(pareja);
 
                 int idHeroeGuardado = daoHeroe.guardarHeroe(heroe);
 
-                if (idHeroeGuardado != 0){ // TIENE PAREJA
-
+                if (idHeroeGuardado != 0){ // SI TIENE PAREJA SE ACTUALIZA DICHA PAREJA
+                    daoHeroe.actualizarPareja(heroe.getPareja().getIdHeroe(), idHeroeGuardado);
                 }
+
+                response.sendRedirect(request.getContextPath()+"/MenuHeroes");
+
+                break;
+
+            case "actualizar":
+
+                heroe = new Heroe();
+                heroe.setNombre(request.getParameter("nombre"));
+                heroe.setEdad(request.getParameter("edad"));
+
+                genero = new Genero();
+                genero.setIdGenero(request.getParameter("genero"));
+                heroe.setGenero(genero);
+
+                heroe.setClase(request.getParameter("clase"));
+                nivel = Integer.parseInt(request.getParameter("nivel"));
+                heroe.setNivel(nivel);
+                heroe.setAtaque(Integer.parseInt(request.getParameter("ataque")));
+
+                experiencia = 0;
+                if (nivel>0 && nivel <=15){
+                    experiencia = (nivel*nivel*nivel)*(24+((float)nivel+1)/3)/50;
+                } else if (nivel>=16 && nivel<=35) {
+                    experiencia = (nivel*nivel*nivel)*(14+(float)nivel)/50;
+                } else if (nivel >= 36 && nivel <= 100) {
+                    experiencia = (nivel*nivel*nivel)*(32+((float)nivel/2))/50;
+                }
+
+                heroe.setExperiencia(experiencia);
+
+                pareja = new Heroe();
+                pareja.setIdHeroe(Integer.parseInt(request.getParameter("idPareja")));
+                heroe.setPareja(pareja);
+
+                daoHeroe.actualizarHeroe(heroe);
+
+                response.sendRedirect(request.getContextPath()+"/MenuHeroes");
 
                 break;
         }
