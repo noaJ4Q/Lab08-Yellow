@@ -3,9 +3,11 @@ package com.example.lab08.MenuEnemigos.Servlets;
 import com.example.lab08.MenuEnemigos.Beans.Clase;
 import com.example.lab08.MenuEnemigos.Beans.Enemigo;
 import com.example.lab08.MenuEnemigos.Beans.Genero;
+import com.example.lab08.MenuEnemigos.Beans.Objeto;
 import com.example.lab08.MenuEnemigos.Daos.DaoClase;
 import com.example.lab08.MenuEnemigos.Daos.DaoEnemigo;
 import com.example.lab08.MenuEnemigos.Daos.DaoGenero;
+import com.example.lab08.MenuEnemigos.Daos.DaoInventario;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -68,6 +70,7 @@ public class MenuEnemigos extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         DaoEnemigo daoEnemigo = new DaoEnemigo();
+        DaoInventario daoInventario = new DaoInventario();
 
         switch (action) {
             case "guardar": //para Guardar el Enemigo creado
@@ -80,9 +83,17 @@ public class MenuEnemigos extends HttpServlet {
                 int ataque = Integer.parseInt(ataqueStr);
                 String experienciaStr = request.getParameter("experiencia");
                 int experiencia = Integer.parseInt(experienciaStr);
-                //String probabilidadStr = request.getParameter("probabilidad");
-                //float probabilidad = Float.parseFloat(probabilidadStr);
-                //como guardar el dato de probabilidad a la tabla de Dropeo???
+                Objeto objeto = new Objeto();
+                String idObjetoStr = request.getParameter("objetoEnemigo");
+                int idObjeto = Integer.parseInt(idObjetoStr);
+                objeto.setIdObjeto(idObjeto);
+                for (Objeto obj: daoInventario.obtenerlistaObjetos()){
+                    if(obj.getIdObjeto() == idObjeto ){
+                        objeto.setNombreObjeto(obj.getNombreObjeto());
+                    }
+                }
+                String probabilidadStr = request.getParameter("probabilidad");
+                float probabilidad = Float.parseFloat(probabilidadStr);
                 Genero genero = new Genero();
                 String idGenero = request.getParameter("generoEnemigo");
                 genero.setIdGenero(idGenero);
@@ -93,6 +104,8 @@ public class MenuEnemigos extends HttpServlet {
                 enemigo.setClase(clase);
                 enemigo.setAtaque(ataque);
                 enemigo.setExperiencia(experiencia);
+                enemigo.setObjeto(objeto);
+                enemigo.setProbabilidad(probabilidad);
                 enemigo.setGenero(genero);
                 daoEnemigo.agregarEnemigo(enemigo);
 

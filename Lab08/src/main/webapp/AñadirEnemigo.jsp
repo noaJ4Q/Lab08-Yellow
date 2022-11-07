@@ -125,7 +125,7 @@
                                 <div class="card top-selling overflow-auto">
 
                                     <div class="card-body pb-0">
-                                        <h5 class="card-title">AÑADIR HÉROE</h5>
+                                        <h5 class="card-title">AÑADIR ENEMIGO</h5>
                                         <form method="post" action="<%=request.getContextPath()%>/MenuEnemigos?action=guardar">
 
                                             <div class="row mb-3">
@@ -165,10 +165,14 @@
                                             </div>
 
                                             <div class="row mb-3">
-                                                <label for="objeto"
+                                                <label for="objetoEnemigo"
                                                        class="col-md-4 col-lg-3 col-form-label">Objeto que deja al ser Derrotado</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="objeto" type="text" class="form-control" id="objeto">
+                                                    <select name="objetoEnemigo" id="objetoEnemigo" class="form-control">
+                                                        <% for(Objeto objeto: listaObjetos){ %>
+                                                        <option value="<%=objeto.getIdObjeto()%>"><%=objeto.getN%></option>
+                                                        <% } %>
+                                                    </select>
                                                 </div>
                                             </div>
 

@@ -23,7 +23,7 @@ public class DaoDanioPorElemento {
         String user = "root";
         String password = "root";
         String url = "jdbc:mysql://localhost:3306/yellow";
-        String sql = "select * from danioporelemento dpe" +
+        String sql = "select * from danoporelemento dpe" +
                 "left join clase c on dpe.idClase = c.idClase " +
                 "left join elemento e on dpe.idElemento = e.idElemento";
 

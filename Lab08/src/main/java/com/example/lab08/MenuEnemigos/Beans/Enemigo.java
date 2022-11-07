@@ -6,6 +6,9 @@ public class Enemigo {
     private Clase clase;
     private int ataque;
     private int experiencia;
+
+    private Objeto objeto;
+    private float probabilidad;
     private Genero genero; //=null por defecto ?
 
     public int getIdEnemigo() {
@@ -54,5 +57,21 @@ public class Enemigo {
 
     public void setGenero(Genero genero) {
         this.genero = genero;
+    }
+
+    public Objeto getObjeto() {
+        return objeto;
+    }
+
+    public void setObjeto(Objeto objeto) {
+        this.objeto = objeto;
+    }
+
+    public float getProbabilidad() {
+        return probabilidad;
+    }
+
+    public void setProbabilidad(float probabilidad) {
+        this.probabilidad = probabilidad;
     }
 }

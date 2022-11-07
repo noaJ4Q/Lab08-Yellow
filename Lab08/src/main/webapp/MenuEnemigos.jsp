@@ -158,9 +158,9 @@
                                                     </td>
                                                     <td><%=enemigo.getExperiencia()%>
                                                     </td>
-                                                    <td>H
+                                                    <td><%=enemigo.getObjeto().getNombreObjeto()%>
                                                     </td>
-                                                    <td>L
+                                                    <td><%=enemigo.getProbabilidad()%>
                                                     </td>
                                                     <td><%=enemigo.getGenero().getNombreGenero()%>
                                                     </td>
