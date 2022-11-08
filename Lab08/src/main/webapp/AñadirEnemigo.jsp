@@ -2,9 +2,11 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.example.lab08.MenuEnemigos.Beans.Clase" %>
 <%@ page import="com.example.lab08.MenuEnemigos.Beans.Genero" %>
+<%@ page import="com.example.lab08.MenuEnemigos.Beans.Objeto" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% ArrayList<Clase> listaClases = (ArrayList<Clase>) request.getAttribute("ListaClases");
     ArrayList<Genero> listaGeneros = (ArrayList<Genero>) request.getAttribute("ListaGeneros");
+    ArrayList<Objeto> listaObjetos = (ArrayList<Objeto>) request.getAttribute("ListaObjetos");
 %>
 <html>
     <head>
@@ -170,7 +172,7 @@
                                                 <div class="col-md-8 col-lg-9">
                                                     <select name="objetoEnemigo" id="objetoEnemigo" class="form-control">
                                                         <% for(Objeto objeto: listaObjetos){ %>
-                                                        <option value="<%=objeto.getIdObjeto()%>"><%=objeto.getN%></option>
+                                                        <option value="<%=objeto.getIdObjeto()%>"><%=objeto.getNombreObjeto()%></option>
                                                         <% } %>
                                                     </select>
                                                 </div>

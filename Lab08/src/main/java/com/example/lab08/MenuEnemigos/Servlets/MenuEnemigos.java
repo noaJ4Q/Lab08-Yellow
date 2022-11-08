@@ -36,8 +36,11 @@ public class MenuEnemigos extends HttpServlet {
             case "crear":
                 ArrayList<Clase> listaClases = daoClase.obtenerListaClases();
                 ArrayList<Genero> listaGeneros = daoGenero.obtenerListaGeneros();
+                DaoInventario daoInventario = new DaoInventario();
+                ArrayList<Objeto> listaObjetos = daoInventario.obtenerlistaObjetos();
                 request.setAttribute("ListaClases",listaClases);
                 request.setAttribute("ListaGeneros",listaGeneros);
+                request.setAttribute("listaObjetos",listaObjetos);
                 vista = request.getRequestDispatcher("AñadirEnemigo.jsp");
                 vista.forward(request,response);
                 break;
@@ -46,6 +49,7 @@ public class MenuEnemigos extends HttpServlet {
                 String idEnemigoStr = request.getParameter("id");
                 int idEnemigo = Integer.parseInt(idEnemigoStr);
                 Enemigo enemigo = daoEnemigo.buscarEnemigo(idEnemigo);
+
                 if(enemigo==null){
                     response.sendRedirect(request.getContextPath()+"/MenuEnemigos");
                 }else{
@@ -108,6 +112,7 @@ public class MenuEnemigos extends HttpServlet {
                 enemigo.setProbabilidad(probabilidad);
                 enemigo.setGenero(genero);
                 daoEnemigo.agregarEnemigo(enemigo);
+                daoEnemigo.agregarDropeo(enemigo);
 
                 response.sendRedirect(request.getContextPath() + "/MenuEnemigos");
 
