@@ -11,6 +11,7 @@
     Heroe heroe = (Heroe) request.getAttribute("heroeEditar");
     ArrayList<Heroe> listaParejas = (ArrayList<Heroe>) request.getAttribute("listaParejas");
 %>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">

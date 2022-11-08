@@ -10,7 +10,9 @@
 <%
     ArrayList<Inventario> listaInventario = (ArrayList<Inventario>) request.getAttribute("listaInventario");
     String idHeroe = (String) request.getAttribute("idHeroe");
+    String nombre = (String) request.getAttribute("nombre");
 %>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
@@ -139,7 +141,7 @@
                                     </div>
 
                                     <div class="card-body pb-0">
-                                        <h5 class="card-title">OBJETOS</h5>
+                                        <h5 class="card-title">INVENTARIO |  <%=nombre%></h5>
                                         <table class="table table-borderless">
                                             <thead>
                                                 <tr>

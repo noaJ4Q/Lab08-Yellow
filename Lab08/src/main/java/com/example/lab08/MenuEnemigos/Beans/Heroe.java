@@ -4,7 +4,7 @@ public class Heroe {
 
     private int idHeroe;
     private String nombre;
-    private String edad;
+    private int edad;
     private Genero genero;
     private String clase;
     private int nivel;
@@ -28,11 +28,11 @@ public class Heroe {
         this.nombre = nombre;
     }
 
-    public String getEdad() {
+    public int getEdad() {
         return edad;
     }
 
-    public void setEdad(String edad) {
+    public void setEdad(int edad) {
         this.edad = edad;
     }
 
