@@ -4,6 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     ArrayList<Heroe> listaHeroes = (ArrayList<Heroe>) request.getAttribute("listaHeroes");
+    String busqueda = (String) request.getAttribute("busqueda");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,7 +52,7 @@
             <!-- BARRA DE BÚSQUEDA -->
             <div class="search-bar">
                 <form class="search-form d-flex align-items-center" method="POST" action="<%=request.getContextPath()%>/MenuHeroes?action=buscar">
-                    <input type="text" name="busqueda" placeholder="Buscar Héroe">
+                    <input type="text" name="busqueda" placeholder="Buscar Héroe" value="<%=busqueda!=null?busqueda:""%>">
                     <button type="submit" title="Search"><i class="bi bi-search"></i></button>
                 </form>
             </div><!-- End Search Bar -->

@@ -54,6 +54,7 @@ public class MenuHeroes extends HttpServlet {
 
                 ArrayList<Inventario> listaInventario = daoInventario.obtenerInventario(idHeroe);
                 request.setAttribute("listaInventario", listaInventario);
+                request.setAttribute("idHeroe", idHeroe);
                 vista = request.getRequestDispatcher("InventarioHeroe.jsp");
                 vista.forward(request, response);
 
@@ -74,7 +75,12 @@ public class MenuHeroes extends HttpServlet {
 
             case "borrar":
                 idHeroe = request.getParameter("idHeroe");
-                daoHeroe.borrarHeroe(idHeroe);
+                Heroe pareja = daoHeroe.buscarPareja(Integer.parseInt(idHeroe));
+                if (pareja != null){
+                    daoHeroe.actualizarPareja(pareja.getIdHeroe(), 0); // ELIMINAR REGISTRO SUYO EN PAREJA SI TIENE PAREJA
+                }
+                daoInventario.borrarInventario(Integer.parseInt(idHeroe)); // ELIMINAR INVENTARIO
+                daoHeroe.borrarHeroe(idHeroe); // ELMINAR HEROE
 
                 response.sendRedirect(request.getContextPath()+"/MenuHeroes");
 
@@ -104,6 +110,21 @@ public class MenuHeroes extends HttpServlet {
                 vista.forward(request, response);
 
                 break;
+
+            case "borrarObjeto":
+
+                idHeroe = request.getParameter("idHeroe");
+                idObjeto = request.getParameter("idObjeto");
+
+                daoInventario.borrarObjeto(Integer.parseInt(idHeroe), Integer.parseInt(idObjeto));
+
+                // ---ESPACIO PARA IMPLICANCIA EN CATALOGO DE OBJETOS-----
+
+                //--------------------------------------------------------
+
+                response.sendRedirect(request.getContextPath()+"/MenuHeroes?action=inventario&idHeroe="+idHeroe);
+
+                break;
         }
     }
 
@@ -129,6 +150,7 @@ public class MenuHeroes extends HttpServlet {
                 String busqueda = request.getParameter("busqueda");
                 ArrayList<Heroe> listaHeroes = daoHeroe.buscarPorNombre(busqueda);
 
+                request.setAttribute("busqueda", busqueda);
                 request.setAttribute("listaHeroes", listaHeroes);
                 vista = request.getRequestDispatcher("MenuHeroes.jsp");
                 vista.forward(request, response);

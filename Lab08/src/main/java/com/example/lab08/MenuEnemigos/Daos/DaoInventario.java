@@ -178,4 +178,51 @@ public class DaoInventario {
         }
     }
 
+    public void borrarObjeto(int idHeroe, int idObjeto){
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String url = "jdbc:mysql://localhost:3306/yellow";
+        String sql = "delete from inventario where idHeroe = ? and idObjeto = ?";
+
+        try (Connection conn = DriverManager.getConnection(url, "root", "root");
+             PreparedStatement pstmt = conn.prepareStatement(sql)){
+
+            pstmt.setInt(1, idHeroe);
+            pstmt.setInt(2, idObjeto);
+
+            pstmt.executeUpdate();
+
+        }catch (SQLException e){
+            throw new RuntimeException();
+        }
+    }
+
+    public void borrarInventario(int idHeroe){
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String url = "jdbc:mysql://localhost:3306/yellow";
+        String sql = "delete from inventario where idHeroe=?";
+
+        try (Connection conn = DriverManager.getConnection(url, "root", "root");
+             PreparedStatement pstmt = conn.prepareStatement(sql)){
+
+            pstmt.setInt(1, idHeroe);
+            pstmt.executeUpdate();
+
+        }
+        catch (SQLException e){
+            throw new RuntimeException();
+        }
+    }
+
 }

@@ -9,6 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     ArrayList<Inventario> listaInventario = (ArrayList<Inventario>) request.getAttribute("listaInventario");
+    String idHeroe = (String) request.getAttribute("idHeroe");
 %>
 <html>
     <head>
@@ -134,7 +135,7 @@
                                 <div class="card top-selling overflow-auto">
 
                                     <div class="filter">
-                                        <a class="icon" href="<%=request.getContextPath()%>/MenuHeroes?action=crearObjeto&idHeroe=<%=listaInventario.get(1).getHeroe().getIdHeroe()%>"><i class="btn btn-secondary">Añadir Objeto</i></a>
+                                        <a class="icon" href="<%=request.getContextPath()%>/MenuHeroes?action=crearObjeto&idHeroe=<%=idHeroe%>"><i class="btn btn-secondary">Añadir Objeto</i></a>
                                     </div>
 
                                     <div class="card-body pb-0">

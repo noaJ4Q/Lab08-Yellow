@@ -365,8 +365,7 @@ public class DaoHeroe {
 
                 try (ResultSet rsKey = pstmt.getGeneratedKeys()){
                     if (rsKey.next()){
-                        int idHeroe = rsKey.getInt(1);
-                        return idHeroe;
+                        return rsKey.getInt(1);
                     }
                     return 0;
                 }
@@ -400,7 +399,6 @@ public class DaoHeroe {
         catch (SQLException e){
             throw new RuntimeException();
         }
-
 
     }
 
