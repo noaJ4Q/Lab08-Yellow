@@ -199,10 +199,34 @@ public class DaoEnemigo {
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
             pstmt.setString(1, enemigo.getNombreEnemigo());
-            pstmt.setString(2, enemigo.getClase().getIdClase());
+            pstmt.setInt(2, enemigo.getClase().getIdClase());
             pstmt.setInt(3, enemigo.getAtaque());
             pstmt.setInt(4, enemigo.getExperiencia());
-            pstmt.setInt(5,enemigo.getGenero().getIdGenero());
+            pstmt.setString(5,enemigo.getGenero().getIdGenero());
+
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void actualizarDropeo(Enemigo enemigo) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String url = "jdbc:mysql://localhost:3306/hr";
+        String sql = "UPDATE enemigo SET idObjeto= ?, probabilidad = ? WHERE idEnemigo = ?";
+
+        try (Connection connection = DriverManager.getConnection(url, "root", "root");
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setInt(1, enemigo.getObjeto().getIdObjeto());
+            pstmt.setFloat(2, enemigo.getProbabilidad());
+            pstmt.setInt(3, enemigo.getIdEnemigo());
 
             pstmt.executeUpdate();
 
