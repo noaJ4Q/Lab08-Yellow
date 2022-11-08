@@ -119,6 +119,7 @@ public class MenuEnemigos extends HttpServlet {
                 break;
 
             case "actualizar": //para Actualizar los datos del Enemigo seleccionado
+
                 String nombre1 = request.getParameter("nombre");
                 Clase clase1 = new Clase();
                 String idClase1Str = request.getParameter("claseEnemigo");
@@ -128,11 +129,21 @@ public class MenuEnemigos extends HttpServlet {
                 int ataque1 = Integer.parseInt(ataque1Str);
                 String experiencia1Str = request.getParameter("experiencia");
                 int experiencia1 = Integer.parseInt(experiencia1Str);
-                //String probabilidad1Str = request.getParameter("probabilidad");
-                //float probabilidad1 = Float.parseFloat(probabilidad1Str);
+                Objeto objeto1 = new Objeto();
+                String idObjeto1Str = request.getParameter("objetoEnemigo");
+                int idObjeto1 = Integer.parseInt(idObjeto1Str);
+                objeto1.setIdObjeto(idObjeto1);
+                for (Objeto obj1: daoInventario.obtenerlistaObjetos()){
+                    if(obj1.getIdObjeto() == idObjeto1 ){
+                        objeto1.setNombreObjeto(obj1.getNombreObjeto());
+                    }
+                }
+                String probabilidad1Str = request.getParameter("probabilidad");
+                float probabilidad1 = Float.parseFloat(probabilidad1Str);
                 Genero genero1 = new Genero();
                 String idGenero1 = request.getParameter("generoEnemigo");
                 genero1.setIdGenero(idGenero1);
+
 
                 //crear nuevo enemigo
                 Enemigo enemigo1 = new Enemigo();
@@ -140,8 +151,11 @@ public class MenuEnemigos extends HttpServlet {
                 enemigo1.setClase(clase1);
                 enemigo1.setAtaque(ataque1);
                 enemigo1.setExperiencia(experiencia1);
+                enemigo1.setObjeto(objeto1);
+                enemigo1.setProbabilidad(probabilidad1);
                 enemigo1.setGenero(genero1);
-                daoEnemigo.agregarEnemigo(enemigo1);
+                daoEnemigo.actualizarEnemigo(enemigo1);
+                daoEnemigo.actualizarDropeo(enemigo1);
 
                 response.sendRedirect(request.getContextPath() + "/MenuEnemigos");
 
