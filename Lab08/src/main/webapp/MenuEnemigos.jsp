@@ -107,6 +107,13 @@
                         <span>Hechizos</span>
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="pages-register.html">
+                        <i class="ri-book-fill"></i>
+                        <span>Objetos</span>
+                    </a>
+                </li>
                 <!-- End Register Page Nav -->
             </ul>
 
