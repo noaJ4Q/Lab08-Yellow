@@ -296,7 +296,8 @@ public class MenuHeroes extends HttpServlet {
 
                 mensajeError = "Error: Dato(s) inválido(s)";
 
-                boolean disponible = false;
+                boolean valido = false;
+                boolean disponible;
 
                 idHeroe = request.getParameter("idHeroe");
                 heroe = daoHeroe.buscarPorId(idHeroe);
@@ -309,10 +310,21 @@ public class MenuHeroes extends HttpServlet {
                     }
                 }
 
-                HashSet<Objeto> listaObjetos = daoInventario.obtenerlistaObjetos2();
-                HashSet<Objeto> listaObjetosHeroe = daoInventario.obtenerlistaObjetosHeroe(Integer.parseInt(idHeroe));
-                listaObjetos.removeAll(listaObjetosHeroe);
-                // FALTA OBTENER LISTA DE OBJETOS DISPONIBLES (listaObjetos)
+                ArrayList<Objeto> listaObjetos = daoInventario.obtenerlistaObjetos();
+                ArrayList<Objeto> listaObjetosHeroe = daoInventario.obtenerlistaObjetosHeroe(Integer.parseInt(idHeroe));
+                ArrayList<Objeto> listaObjetosDisp = new ArrayList<>();
+
+                for (Objeto o: listaObjetos){
+                    disponible = true;
+                    for (Objeto o1: listaObjetosHeroe){
+                        if (o.getIdObjeto()==o1.getIdObjeto()){
+                            disponible = false;
+                        }
+                    }
+                    if (disponible){
+                        listaObjetosDisp.add(o);
+                    }
+                }
 
                 try {
                     cantidad = Integer.parseInt(request.getParameter("cantidad"));
@@ -320,13 +332,13 @@ public class MenuHeroes extends HttpServlet {
 
                     // ------ VALIDACION DE QUE HEROE NO REGISTRE MISMO OBJETO DOS VECES ---------
 
-                    for (Objeto o: listaObjetos){
+                    for (Objeto o: listaObjetosDisp){
                         if (nombreObjeto.equalsIgnoreCase(o.getNombreObjeto())){
 
                             pesoTotal = pesoTotal + cantidad*daoObjeto.buscarPorNombre(nombreObjeto).getPeso();
 
                             if (cantidad>0 && (pesoTotal<(heroe.getAtaque()*heroe.getAtaque()))){
-                                disponible = true;
+                                valido = true;
                             }
                             else {
                                 mensajeError = "Error: Cantidad inválida";
@@ -336,7 +348,7 @@ public class MenuHeroes extends HttpServlet {
                         }
                     }
 
-                    if (disponible){
+                    if (valido){
                         idObjeto = daoObjeto.buscarPorNombre(nombreObjeto).getIdObjeto();
                         daoInventario.guardarObjeto(Integer.parseInt(idHeroe), idObjeto, cantidad);
                         response.sendRedirect(request.getContextPath() + "/MenuHeroes?action=inventario&idHeroe=" + idHeroe);

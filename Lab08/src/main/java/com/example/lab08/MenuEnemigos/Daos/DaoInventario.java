@@ -61,40 +61,6 @@ public class DaoInventario {
         return listaInventario;
     }
 
-    public HashSet<Objeto> obtenerlistaObjetos2(){
-        HashSet<Objeto> listaObjetos = new HashSet<>();
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        String url = "jdbc:mysql://localhost:3306/yellow";
-        String sql = "SELECT * FROM catalogodeobjetos";
-
-        try (Connection conn = DriverManager.getConnection(url, "root", "root");
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql)){
-
-            while (rs.next()){
-
-                Objeto objeto = new Objeto();
-
-                objeto.setIdObjeto(rs.getInt(1));
-                objeto.setNombreObjeto(rs.getString(2));
-                objeto.setEfectoUso(rs.getString(3));
-                objeto.setPeso(rs.getFloat(4));
-
-                listaObjetos.add(objeto);
-            }
-
-        }catch (SQLException e){
-            throw new RuntimeException();
-        }
-        return listaObjetos;
-
-    }
 
     public ArrayList<Objeto> obtenerlistaObjetos(){
         ArrayList<Objeto> listaObjetos = new ArrayList<>();
@@ -131,8 +97,8 @@ public class DaoInventario {
 
     }
 
-    public HashSet<Objeto> obtenerlistaObjetosHeroe(int idHeroe){
-        HashSet<Objeto> listaObjetos = new HashSet<>();
+    public ArrayList<Objeto> obtenerlistaObjetosHeroe(int idHeroe){
+        ArrayList<Objeto> listaObjetos = new ArrayList<>();
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

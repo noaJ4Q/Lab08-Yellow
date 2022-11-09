@@ -36,7 +36,7 @@
     <body style="background-color: #F9E64B;">
 
         <!-- ======= Header ======= -->
-        <header class="header fixed-top d-flex align-items-center" style="background-color: #FAFAFA;">
+        <header class="header fixed-top d-flex align-items-center" style="background-color: #FFF7EC;">
 
             <div class="d-flex align-items-center justify-content-between">
                 <a href="<%=request.getContextPath()%>/" class="logo d-flex align-items-center">
