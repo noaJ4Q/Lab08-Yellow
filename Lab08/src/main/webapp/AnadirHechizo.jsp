@@ -1,6 +1,6 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.example.lab08.MenuEnemigos.Beans.Heroe" %>
-<%@ page import="com.example.lab08.MenuEnemigos.Beans.Elemento" %>
+<%@ page import="com.example.lab08.WIkiFantastica.Beans.Heroe" %>
+<%@ page import="com.example.lab08.WIkiFantastica.Beans.Elemento" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     ArrayList<Elemento> listaElemento = (ArrayList<Elemento>) request.getAttribute("listaElemento");

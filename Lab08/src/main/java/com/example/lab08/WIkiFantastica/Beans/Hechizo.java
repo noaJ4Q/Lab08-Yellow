@@ -1,4 +1,4 @@
-package com.example.lab08.MenuEnemigos.Beans;
+package com.example.lab08.WIkiFantastica.Beans;
 
 public class Hechizo {
     private int idHechizo;

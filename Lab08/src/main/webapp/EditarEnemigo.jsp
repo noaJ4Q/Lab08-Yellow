@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.example.lab08.MenuEnemigos.Beans.Clase" %>
-<%@ page import="com.example.lab08.MenuEnemigos.Beans.Genero" %>
-<%@ page import="com.example.lab08.MenuEnemigos.Beans.Objeto" %>
-<%@ page import="com.example.lab08.MenuEnemigos.Beans.Enemigo" %>
+<%@ page import="com.example.lab08.WIkiFantastica.Beans.Clase" %>
+<%@ page import="com.example.lab08.WIkiFantastica.Beans.Genero" %>
+<%@ page import="com.example.lab08.WIkiFantastica.Beans.Objeto" %>
+<%@ page import="com.example.lab08.WIkiFantastica.Beans.Enemigo" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <% ArrayList<Clase> listaClases = (ArrayList<Clase>) request.getAttribute("ListaClases");

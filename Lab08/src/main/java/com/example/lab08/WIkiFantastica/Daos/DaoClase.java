@@ -1,7 +1,6 @@
-package com.example.lab08.MenuEnemigos.Daos;
+package com.example.lab08.WIkiFantastica.Daos;
 
-import com.example.lab08.MenuEnemigos.Beans.Clase;
-import com.example.lab08.MenuEnemigos.Beans.Enemigo;
+import com.example.lab08.WIkiFantastica.Beans.Clase;
 
 import java.sql.*;
 import java.util.ArrayList;

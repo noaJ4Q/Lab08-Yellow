@@ -1,14 +1,11 @@
-package com.example.lab08.MenuEnemigos.Servlets;
+package com.example.lab08.WIkiFantastica.Servlets;
 
 import java.io.*;
-import java.rmi.ServerException;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-
-import javax.sql.rowset.serial.SerialException;
 
 @WebServlet(name = "servletInicio", value = "")
 public class ServletInicio extends HttpServlet {

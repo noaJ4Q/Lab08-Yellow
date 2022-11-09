@@ -1,7 +1,7 @@
-package com.example.lab08.MenuEnemigos.Servlets;
+package com.example.lab08.WIkiFantastica.Servlets;
 
-import com.example.lab08.MenuEnemigos.Beans.*;
-import com.example.lab08.MenuEnemigos.Daos.*;
+import com.example.lab08.WIkiFantastica.Beans.*;
+import com.example.lab08.WIkiFantastica.Daos.*;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 @WebServlet(name = "MenuHechizos", value = "/MenuHechizos")
 public class MenuHechizos extends HttpServlet {

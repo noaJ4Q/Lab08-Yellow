@@ -73,7 +73,7 @@
                 <!-- End Contact Page Nav -->
 
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="pages-register.html">
+                    <a class="nav-link collapsed" href="<%=request.getContextPath()%>/MenuHechizos">
                         <i class="ri-ink-bottle-fill"></i>
                         <span>Hechizos</span>
                     </a>

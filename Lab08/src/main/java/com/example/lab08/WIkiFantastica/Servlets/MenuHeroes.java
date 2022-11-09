@@ -1,19 +1,18 @@
-package com.example.lab08.MenuEnemigos.Servlets;
+package com.example.lab08.WIkiFantastica.Servlets;
 
-import com.example.lab08.MenuEnemigos.Beans.Genero;
-import com.example.lab08.MenuEnemigos.Beans.Heroe;
-import com.example.lab08.MenuEnemigos.Beans.Inventario;
-import com.example.lab08.MenuEnemigos.Beans.Objeto;
-import com.example.lab08.MenuEnemigos.Daos.DaoHeroe;
-import com.example.lab08.MenuEnemigos.Daos.DaoInventario;
-import com.example.lab08.MenuEnemigos.Daos.DaoObjeto;
+import com.example.lab08.WIkiFantastica.Beans.Genero;
+import com.example.lab08.WIkiFantastica.Beans.Heroe;
+import com.example.lab08.WIkiFantastica.Beans.Inventario;
+import com.example.lab08.WIkiFantastica.Beans.Objeto;
+import com.example.lab08.WIkiFantastica.Daos.DaoHeroe;
+import com.example.lab08.WIkiFantastica.Daos.DaoInventario;
+import com.example.lab08.WIkiFantastica.Daos.DaoObjeto;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 @WebServlet(name = "MenuHeroes", value = "/MenuHeroes")
 public class MenuHeroes extends HttpServlet {

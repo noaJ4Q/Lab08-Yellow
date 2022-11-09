@@ -1,12 +1,11 @@
-package com.example.lab08.MenuEnemigos.Daos;
+package com.example.lab08.WIkiFantastica.Daos;
 
-import com.example.lab08.MenuEnemigos.Beans.Heroe;
-import com.example.lab08.MenuEnemigos.Beans.Inventario;
-import com.example.lab08.MenuEnemigos.Beans.Objeto;
+import com.example.lab08.WIkiFantastica.Beans.Heroe;
+import com.example.lab08.WIkiFantastica.Beans.Inventario;
+import com.example.lab08.WIkiFantastica.Beans.Objeto;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class DaoInventario {
 

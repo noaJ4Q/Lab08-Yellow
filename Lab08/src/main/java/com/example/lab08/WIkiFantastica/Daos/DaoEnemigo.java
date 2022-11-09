@@ -1,13 +1,13 @@
-package com.example.lab08.MenuEnemigos.Daos;
+package com.example.lab08.WIkiFantastica.Daos;
 
 
 import java.sql.*;
 import java.util.ArrayList;
 
-import com.example.lab08.MenuEnemigos.Beans.Clase;
-import com.example.lab08.MenuEnemigos.Beans.Enemigo;
-import com.example.lab08.MenuEnemigos.Beans.Genero;
-import com.example.lab08.MenuEnemigos.Beans.Objeto;
+import com.example.lab08.WIkiFantastica.Beans.Clase;
+import com.example.lab08.WIkiFantastica.Beans.Enemigo;
+import com.example.lab08.WIkiFantastica.Beans.Genero;
+import com.example.lab08.WIkiFantastica.Beans.Objeto;
 
 public class DaoEnemigo {
 

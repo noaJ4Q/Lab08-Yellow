@@ -1,13 +1,13 @@
-package com.example.lab08.MenuEnemigos.Servlets;
+package com.example.lab08.WIkiFantastica.Servlets;
 
-import com.example.lab08.MenuEnemigos.Beans.Clase;
-import com.example.lab08.MenuEnemigos.Beans.Enemigo;
-import com.example.lab08.MenuEnemigos.Beans.Genero;
-import com.example.lab08.MenuEnemigos.Beans.Objeto;
-import com.example.lab08.MenuEnemigos.Daos.DaoClase;
-import com.example.lab08.MenuEnemigos.Daos.DaoEnemigo;
-import com.example.lab08.MenuEnemigos.Daos.DaoGenero;
-import com.example.lab08.MenuEnemigos.Daos.DaoInventario;
+import com.example.lab08.WIkiFantastica.Beans.Clase;
+import com.example.lab08.WIkiFantastica.Beans.Enemigo;
+import com.example.lab08.WIkiFantastica.Beans.Genero;
+import com.example.lab08.WIkiFantastica.Beans.Objeto;
+import com.example.lab08.WIkiFantastica.Daos.DaoClase;
+import com.example.lab08.WIkiFantastica.Daos.DaoEnemigo;
+import com.example.lab08.WIkiFantastica.Daos.DaoGenero;
+import com.example.lab08.WIkiFantastica.Daos.DaoInventario;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;

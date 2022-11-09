@@ -1,5 +1,5 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.example.lab08.MenuEnemigos.Beans.Inventario" %><%--
+<%@ page import="com.example.lab08.WIkiFantastica.Beans.Inventario" %><%--
   Created by IntelliJ IDEA.
   User: noqe2
   Date: 06/11/2022

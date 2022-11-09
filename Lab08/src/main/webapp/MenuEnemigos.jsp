@@ -1,4 +1,4 @@
-<%@ page import="com.example.lab08.MenuEnemigos.Beans.Enemigo" %>
+<%@ page import="com.example.lab08.WIkiFantastica.Beans.Enemigo" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
