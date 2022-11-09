@@ -3,7 +3,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     ArrayList<Heroe> listaParejas = (ArrayList<Heroe>) request.getAttribute("listaParejas");
+    String mensajeError = (String) request.getAttribute("mensajeError");
 %>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
@@ -46,7 +48,8 @@
 
             <!-- BARRA DE BÚSQUEDA -->
             <div class="search-bar">
-                <form class="search-form d-flex align-items-center align-middle" method="POST" action="<%=request.getContextPath()%>/MenuHeroes?action=buscar">
+                <form class="search-form d-flex align-items-center align-middle" method="POST"
+                      action="<%=request.getContextPath()%>/MenuHeroes?action=buscar">
                     <input type="text" name="busqueda" placeholder="Buscar Héroe">
                     <button type="submit" title="Search"><i class="bi bi-search"></i></button>
                 </form>
@@ -137,7 +140,7 @@
                                                 <label for="nombre"
                                                        class="col-md-4 col-lg-3 col-form-label">Nombre</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="nombre" type="text" class="form-control" id="nombre">
+                                                    <input name="nombre" type="text" class="form-control" id="nombre" required>
                                                 </div>
                                             </div>
 
@@ -145,7 +148,7 @@
                                                 <label for="edad"
                                                        class="col-md-4 col-lg-3 col-form-label">Edad</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="edad" type="text" class="form-control" id="edad">
+                                                    <input name="edad" type="text" class="form-control" id="edad" required>
                                                 </div>
                                             </div>
 
@@ -153,7 +156,7 @@
                                                 <label for="genero"
                                                        class="col-md-4 col-lg-3 col-form-label">Género</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <select class="form-select" id="genero" name="genero">
+                                                    <select class="form-select" id="genero" name="genero" required>
                                                         <option selected>Seleccione un género</option>
                                                         <option value="M">Masculino</option>
                                                         <option value="F">Femenino</option>
@@ -166,7 +169,7 @@
                                                 <label for="clase"
                                                        class="col-md-4 col-lg-3 col-form-label">Clase</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="clase" type="text" class="form-control" id="clase">
+                                                    <input name="clase" type="text" class="form-control" id="clase" required>
                                                 </div>
                                             </div>
 
@@ -174,7 +177,7 @@
                                                 <label for="nivel"
                                                        class="col-md-4 col-lg-3 col-form-label">Nivel</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="nivel" type="text" class="form-control" id="nivel">
+                                                    <input name="nivel" type="text" class="form-control" id="nivel" required>
                                                 </div>
                                             </div>
 
@@ -182,18 +185,19 @@
                                                 <label for="ataque"
                                                        class="col-md-4 col-lg-3 col-form-label">Ataque</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="ataque" type="text" class="form-control" id="ataque">
+                                                    <input name="ataque" type="text" class="form-control" id="ataque" required>
                                                 </div>
                                             </div>
 
                                             <div class="row mb-3">
                                                 <label for="idPareja"
-                                                       class="col-md-4 col-lg-3 col-form-label">Pareja (Opciones disponibles)</label>
+                                                       class="col-md-4 col-lg-3 col-form-label">Pareja (Opciones
+                                                    disponibles)</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <select class="form-select" id="idPareja" name="idPareja">
-                                                        <option selected>Seleccione el ID de la pareja</option>
+                                                    <select class="form-select" id="idPareja" name="idPareja" required>
+                                                        <option value="0" selected>Seleccione el ID de la pareja</option>
                                                         <%
-                                                            for (Heroe heroe: listaParejas){
+                                                            for (Heroe heroe : listaParejas) {
                                                         %>
                                                         <option value="<%=heroe.getIdHeroe()%>"><%=heroe.getIdHeroe()%></option>
                                                         <%}%>
@@ -203,6 +207,13 @@
                                             </div>
 
                                             <div class="row mb-3">
+                                                <%
+                                                if (mensajeError != null){
+                                                %>
+                                                <div class="col-md-4 col-lg-4 col-form-label">
+                                                    <span class="text-danger"><%=mensajeError%></span>
+                                                </div>
+                                                <%}%>
                                                 <div class="d-grid gap-2 col-6 col-lg-4 col-xl-3 mx-auto">
                                                     <button class="btn btn-secondary" type="submit">Añadir</button>
                                                 </div>

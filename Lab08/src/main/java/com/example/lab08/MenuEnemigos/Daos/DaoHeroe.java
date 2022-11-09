@@ -31,7 +31,7 @@ public class DaoHeroe {
 
                     parejaDisponible.setIdHeroe(rs.getInt(1));
                     parejaDisponible.setNombre(rs.getString(2));
-                    parejaDisponible.setEdad(rs.getString(3));
+                    parejaDisponible.setEdad(rs.getInt(3));
 
                     Genero genero = new Genero();
                     genero.setIdGenero(rs.getString(4));
@@ -78,7 +78,7 @@ public class DaoHeroe {
 
                 heroe.setIdHeroe(rs.getInt(1));
                 heroe.setNombre(rs.getString(2));
-                heroe.setEdad(rs.getString(3));
+                heroe.setEdad(rs.getInt(3));
 
                 Genero genero = new Genero();
                 genero.setNombreGenero(rs.getString(4));
@@ -130,7 +130,7 @@ public class DaoHeroe {
 
                     heroe.setIdHeroe(rs.getInt(1));
                     heroe.setNombre(rs.getString(2));
-                    heroe.setEdad(rs.getString(3));
+                    heroe.setEdad(rs.getInt(3));
 
                     Genero genero = new Genero();
                     genero.setIdGenero(rs.getString(4));
@@ -184,7 +184,7 @@ public class DaoHeroe {
 
                     heroe.setIdHeroe(rs.getInt(1));
                     heroe.setNombre(rs.getString(2));
-                    heroe.setEdad(rs.getString(3));
+                    heroe.setEdad(rs.getInt(3));
 
                     Genero genero = new Genero();
                     genero.setNombreGenero(rs.getString(4));
@@ -236,7 +236,7 @@ public class DaoHeroe {
 
                     pareja.setIdHeroe(rs.getInt(1));
                     pareja.setNombre(rs.getString(2));
-                    pareja.setEdad(rs.getString(3));
+                    pareja.setEdad(rs.getInt(3));
 
                     Genero genero = new Genero();
                     genero.setIdGenero(rs.getString(4));
@@ -306,7 +306,7 @@ public class DaoHeroe {
             PreparedStatement pstmt = conn.prepareStatement(sql)){
 
             pstmt.setString(1, heroe.getNombre());
-            pstmt.setString(2, heroe.getEdad());
+            pstmt.setInt(2, heroe.getEdad());
             pstmt.setString(3, heroe.getGenero().getIdGenero());
             pstmt.setString(4, heroe.getClase());
             pstmt.setInt(5, heroe.getNivel());
@@ -346,7 +346,7 @@ public class DaoHeroe {
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
 
             pstmt.setString(1, heroe.getNombre());
-            pstmt.setString(2, heroe.getEdad());
+            pstmt.setInt(2, heroe.getEdad());
             pstmt.setString(3, heroe.getGenero().getIdGenero());
             pstmt.setString(4, heroe.getClase());
             pstmt.setInt(5, heroe.getNivel());

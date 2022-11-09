@@ -152,7 +152,6 @@ public class MenuEnemigos extends HttpServlet {
                 String idGenero1 = request.getParameter("generoEnemigo");
                 genero1.setIdGenero(idGenero1);
 
-
                 //crear nuevo enemigo
                 Enemigo enemigo1 = new Enemigo();
                 enemigo1.setIdEnemigo(idEnemigo);
