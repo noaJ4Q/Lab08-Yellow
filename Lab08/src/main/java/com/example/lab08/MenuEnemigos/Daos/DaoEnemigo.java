@@ -147,6 +147,7 @@ public class DaoEnemigo {
 
             pstmt.executeUpdate();
 
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

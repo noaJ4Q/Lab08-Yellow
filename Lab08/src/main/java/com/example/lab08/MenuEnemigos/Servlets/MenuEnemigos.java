@@ -27,8 +27,7 @@ public class MenuEnemigos extends HttpServlet {
 
         switch (action){
             case "listar":
-                ArrayList<Enemigo> listaEnemigos = daoEnemigo.obtenerListaEnemigos();
-                request.setAttribute("ListaEnemigos",listaEnemigos);
+                request.setAttribute("ListaEnemigos",daoEnemigo.obtenerListaEnemigos());
                 vista = request.getRequestDispatcher("MenuEnemigos.jsp");
                 vista.forward(request,response);
                 break;
@@ -37,10 +36,10 @@ public class MenuEnemigos extends HttpServlet {
                 ArrayList<Clase> listaClases = daoClase.obtenerListaClases();
                 ArrayList<Genero> listaGeneros = daoGenero.obtenerListaGeneros();
                 DaoInventario daoInventario = new DaoInventario();
-                ArrayList<Objeto> listaObjetos = daoInventario.obtenerlistaObjetos();
+                //rrayList<Objeto> listaObjetos = daoInventario.obtenerlistaObjetos();
                 request.setAttribute("ListaClases",listaClases);
                 request.setAttribute("ListaGeneros",listaGeneros);
-                request.setAttribute("ListaObjetos",listaObjetos);
+                request.setAttribute("ListaObjetos",daoInventario.obtenerlistaObjetos());
                 vista = request.getRequestDispatcher("AñadirEnemigo.jsp");
                 vista.forward(request,response);
                 break;
@@ -63,7 +62,9 @@ public class MenuEnemigos extends HttpServlet {
                     request.setAttribute("ListaObjetos",listaObjetos1);
                     vista= request.getRequestDispatcher("EditarEnemigo.jsp");
                     vista.forward(request,response);
+                    response.sendRedirect(request.getContextPath()+"/MenuEnemigos");
                 }
+
              break;
 
             case "borrar":
@@ -119,9 +120,10 @@ public class MenuEnemigos extends HttpServlet {
                 enemigo.setProbabilidad(probabilidad);
                 enemigo.setGenero(genero);
                 daoEnemigo.agregarEnemigo(enemigo);
-                daoEnemigo.agregarDropeo(enemigo);
 
                 response.sendRedirect(request.getContextPath() + "/MenuEnemigos");
+
+                //daoEnemigo.agregarDropeo(enemigo);
 
                 break;
 

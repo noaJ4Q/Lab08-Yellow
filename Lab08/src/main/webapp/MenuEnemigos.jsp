@@ -2,7 +2,8 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%ArrayList<Enemigo> listaEnemigos = (ArrayList<Enemigo>) request.getAttribute("ListaEnemigos");%>
+<% ArrayList<Enemigo> listaEnemigos = (ArrayList<Enemigo>) request.getAttribute("ListaEnemigos") ;%>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
