@@ -6,6 +6,7 @@ import com.example.lab08.MenuEnemigos.Beans.Objeto;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class DaoInventario {
 
@@ -60,6 +61,7 @@ public class DaoInventario {
         return listaInventario;
     }
 
+
     public ArrayList<Objeto> obtenerlistaObjetos(){
         ArrayList<Objeto> listaObjetos = new ArrayList<>();
 
@@ -73,8 +75,8 @@ public class DaoInventario {
         String sql = "SELECT * FROM catalogodeobjetos";
 
         try (Connection conn = DriverManager.getConnection(url, "root", "root");
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql)){
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)){
 
             while (rs.next()){
 
@@ -91,10 +93,48 @@ public class DaoInventario {
         }catch (SQLException e){
             throw new RuntimeException();
         }
-
-
         return listaObjetos;
 
+    }
+
+    public ArrayList<Objeto> obtenerlistaObjetosHeroe(int idHeroe){
+        ArrayList<Objeto> listaObjetos = new ArrayList<>();
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String url = "jdbc:mysql://localhost:3306/yellow";
+        String sql = "select o.* from inventario i " +
+                "inner join catalogodeobjetos o on (i.idObjeto = o.idObjeto) " +
+                "where idHeroe = ?";
+
+        try (Connection conn = DriverManager.getConnection(url, "root", "root");
+             PreparedStatement pstmt = conn.prepareStatement(sql)){
+
+            pstmt.setInt(1, idHeroe);
+
+            try (ResultSet rs = pstmt.executeQuery()){
+                while (rs.next()){
+
+                    Objeto objeto = new Objeto();
+
+                    objeto.setIdObjeto(rs.getInt(1));
+                    objeto.setNombreObjeto(rs.getString(2));
+                    objeto.setEfectoUso(rs.getString(3));
+                    objeto.setPeso(rs.getFloat(4));
+
+                    listaObjetos.add(objeto);
+                }
+            }
+
+        }catch (SQLException e){
+            throw new RuntimeException();
+        }
+
+        return listaObjetos;
     }
 
     public int obtenerCantidad(int idHeroe, int idObjeto){
