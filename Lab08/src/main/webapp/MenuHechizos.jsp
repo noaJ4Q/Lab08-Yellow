@@ -1,19 +1,27 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.lab08.MenuEnemigos.Beans.Heroe" %>
+<%@ page import="com.example.lab08.MenuEnemigos.Beans.Hechizo" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    ArrayList<Hechizo>listaHechizos = (ArrayList<Hechizo>)request.getAttribute("listaHechizos");
+    String busqueda = (String) request.getAttribute("busqueda");
+%>
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-        <title>Wiki Fantástica</title>
+        <title>Héroes / Wiki Fantástica</title>
 
         <!-- Favicons -->
         <link href="assets/img/favicon.png" rel="icon">
 
         <!-- Google Fonts -->
         <link href="https://fonts.gstatic.com" rel="preconnect">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+              rel="stylesheet">
 
         <!-- Vendor CSS Files -->
         <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -32,15 +40,38 @@
     <body style="background-color: #F9E64B;">
 
         <!-- ======= Header ======= -->
-        <header class="header fixed-top d-flex align-items-center" style="background-color: #FAFAFA;">
+        <header class="header fixed-top d-flex align-items-center" style="background-color: #FFF7EC;">
+
             <div class="d-flex align-items-center justify-content-between">
                 <a href="<%=request.getContextPath()%>/" class="logo d-flex align-items-center">
                     <span class="d-none d-lg-block">Wiki Fantástica</span>
                 </a>
                 <i class="bi bi-list toggle-sidebar-btn"></i>
-            </div><!-- End Logo -->
+            </div>
+            <!-- End Logo -->
 
-        </header><!-- End Header -->
+            <!-- BARRA DE BÚSQUEDA -->
+            <div class="search-bar">
+                <form class="search-form d-flex align-items-center" method="POST" action="<%=request.getContextPath()%>/MenuHechizos?action=buscar">
+                    <input type="text" name="busqueda" placeholder="Buscar Hechizo" value="<%=busqueda!=null?busqueda:""%>">
+                    <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+                </form>
+            </div><!-- End Search Bar -->
+
+            <!-- BOTÓN DE BÚSQUEDA -->
+            <nav class="header-nav ms-auto">
+                <ul class="d-flex align-items-center">
+
+                    <li class="nav-item d-block d-lg-none">
+                        <a class="nav-link nav-icon search-bar-toggle " href="#">
+                            <i class="bi bi-search"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- End Search Icon-->
+        </header>
+        <!-- End Header -->
 
         <!-- ======= Sidebar ======= -->
         <aside id="sidebar" class="sidebar">
@@ -97,72 +128,68 @@
                 <div class="row">
 
                     <!-- Left side columns -->
-                    <div class="col-lg-8">
+                    <div class="container-fluid">
                         <div class="row">
 
                             <!-- Top Selling -->
                             <div class="col-12">
                                 <div class="card top-selling overflow-auto">
 
-
-                                    <div class="card-body pb-0">
-                                        <h5 class="card-title">Wiki Fantastica</h5>
-
-                                        <table class="table table-borderless">
-                                            <tbody>
-                                                <tr>
-                                                    <td><a href="#" class="text-primary ">Agua, tierra, fuego y arie. Desde hace mucho tiempo el mundo se ha mantenido en paz y
-                                                        prosperidad gracias al poder de los cristales elementales. Sin embargo, Forond, el rey de la
-                                                        oscuridad se ha propuesto destruir estos cristales para ser el amo de la magia. Mold y su
-                                                        grupo de jóvenes aventureros parten en una travesía para poder proteger los cristales y
-                                                        vencer a Forond en su malvado plan</a></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-
+                                    <div class="filter">
+                                        <a class="icon" href="<%=request.getContextPath()%>/MenuHechizos?action=crear"><i class="btn btn-secondary">Añadir Hechizo</i></a>
                                     </div>
 
+                                    <div class="card-body pb-0">
+                                        <h5 class="card-title">HECHIZOS</h5>
+                                        <table class="table table-borderless">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Nombre</th>
+                                                    <th>Elemento</th>
+                                                    <th>Potencia</th>
+                                                    <th>Precision</th>
+                                                    <th>Hechizo Base</th>
+                                                    <th>Nivel de aprendizaje</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <%
+                                                    for (Hechizo hechizo : listaHechizos) {
+                                                %>
+                                                <tr>
+                                                    <td class="fw-bold"><%=hechizo.getIdHechizo()%>
+                                                    </td>
+                                                    <td><%=hechizo.getNombreHechizo()%>
+                                                    </td>
+                                                    <td><%=hechizo.getElementoHechizo().getNombreElemento()%>
+                                                    </td>
+                                                    <td><%=hechizo.getPotencia()%>
+                                                    </td>
+                                                    <td><%=hechizo.getPrecision()%>
+                                                    </td>
+                                                    <td><%=hechizo.getHechizoBase().getNombreHechizo()%>
+                                                    </td>
+                                                    <td><%=hechizo.getNivelAprendizaje()%>
+                                                    </td>
+                                                    <td>
+                                                        <a type="button" href="<%=request.getContextPath()%>/MenuHeroes?action=borrar&idHeroe=<%=heroe.getIdHeroe()%>">
+                                                            <i class="bx bxs-trash-alt"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <%}%>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div><!-- End Top Selling -->
 
                         </div>
                     </div><!-- End Left side columns -->
-
-                    <!-- Right side columns -->
-                    <div class="col-lg-4">
-
-                        <!-- News & Updates Traffic -->
-                        <div class="card">
-                            <div class="card-body pb-0">
-                                <h5 class="card-title">Entidades principales</h5>
-
-                                <div class="news">
-                                    <div class="post-item clearfix">
-                                        <img src="WikiFantas.JPG" alt="">
-                                        <h4><a href="#">Heroes</a></h4>
-                                        <p>Los héroes serán el grupo de jóvenes, liderado por Mold y su hermana Erde, que están
-                                            dispuestos a arriesgar su vida con el fin de detener los planes de Forond y así mantener la
-                                            armonía del mundo. </p>
-                                    </div>
-
-                                    <div class="post-item clearfix">
-                                        <img src="wkifant1.JPG" alt="">
-                                        <h4><a href="#">Enemigos</a></h4>
-                                        <p>Los enemigos son seres malignos dispuestos a destruir a los héroes. </p>
-                                    </div>
-
-                                    <div class="post-item clearfix">
-                                        <img src="WikiFantas.JPG" alt="">
-                                        <h4><a href="#">Hechizos</a></h4>
-                                        <p>Los hechizos son unas poderosas armas elementales usadas  para poder librar la guerra en este mundo tan hostil. </p>
-                                    </div>
-
-                                </div><!-- End sidebar recent posts-->
-
-                            </div>
-                        </div><!-- End News & Updates -->
-
-                    </div><!-- End Right side columns -->
 
                 </div>
             </section>
