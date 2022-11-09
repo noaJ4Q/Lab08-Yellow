@@ -10,7 +10,9 @@
   String idHeroe = (String) request.getAttribute("idHeroe");
   String idObjeto = (String) request.getAttribute("idObjeto");
   int cantidad = (int) request.getAttribute("cantidad");
+  String mensajeError = (String) request.getAttribute("mensajeError");
 %>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -148,6 +150,14 @@
                       </div>
 
                       <div class="row mb-3">
+                        <%
+                          if (mensajeError != null){
+
+                        %>
+                        <div class="col-md-4 col-lg-5 col-form-label">
+                          <span class="text-danger"><%=mensajeError%></span>
+                        </div>
+                        <%}%>
                         <div class="d-grid gap-2 col-6 col-lg-4 col-xl-3 mx-auto">
                           <button class="btn btn-secondary" type="submit">Guardar</button>
                         </div>

@@ -4,6 +4,7 @@
 <%
     Heroe heroe = (Heroe) request.getAttribute("heroeEditar");
     ArrayList<Heroe> listaParejas = (ArrayList<Heroe>) request.getAttribute("listaParejas");
+    String mensajeError = (String) request.getAttribute("mensajeError");
 %>
 <!DOCTYPE html>
 <html>
@@ -144,7 +145,7 @@
                                                        class="col-md-4 col-lg-3 col-form-label">Nombre</label>
                                                 <div class="col-md-8 col-lg-9">
                                                     <input name="nombre" type="text" class="form-control" id="nombre"
-                                                           value="<%=heroe.getNombre()%>">
+                                                           value="<%=heroe.getNombre()%>" required>
                                                 </div>
                                             </div>
 
@@ -153,7 +154,7 @@
                                                        class="col-md-4 col-lg-3 col-form-label">Edad</label>
                                                 <div class="col-md-8 col-lg-9">
                                                     <input name="edad" type="text" class="form-control" id="edad"
-                                                           value="<%=heroe.getEdad()%>">
+                                                           value="<%=heroe.getEdad()%>" required>
                                                 </div>
                                             </div>
 
@@ -161,7 +162,7 @@
                                                 <label for="genero"
                                                        class="col-md-4 col-lg-3 col-form-label">Género</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <select class="form-select" id="genero" name="genero">
+                                                    <select class="form-select" id="genero" name="genero" required>
                                                         <option value="<%=heroe.getGenero().getIdGenero()%>" selected>Seleccione un género</option>
                                                         <option value="M">Masculino</option>
                                                         <option value="F">Femenino</option>
@@ -174,7 +175,7 @@
                                                 <label for="clase"
                                                        class="col-md-4 col-lg-3 col-form-label">Clase</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="clase" type="text" class="form-control" id="clase" value="<%=heroe.getClase()%>">
+                                                    <input name="clase" type="text" class="form-control" id="clase" value="<%=heroe.getClase()%>" required>
                                                 </div>
                                             </div>
 
@@ -182,7 +183,7 @@
                                                 <label for="nivel"
                                                        class="col-md-4 col-lg-3 col-form-label">Nivel</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="nivel" type="text" class="form-control" id="nivel" value="<%=heroe.getNivel()%>">
+                                                    <input name="nivel" type="text" class="form-control" id="nivel" value="<%=heroe.getNivel()%>" required>
                                                 </div>
                                             </div>
 
@@ -190,7 +191,7 @@
                                                 <label for="ataque"
                                                        class="col-md-4 col-lg-3 col-form-label">Ataque</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="ataque" type="text" class="form-control" id="ataque" value="<%=heroe.getAtaque()%>">
+                                                    <input name="ataque" type="text" class="form-control" id="ataque" value="<%=heroe.getAtaque()%>" required>
                                                 </div>
                                             </div>
 
@@ -199,7 +200,7 @@
                                                        class="col-md-4 col-lg-3 col-form-label">Pareja (Opciones
                                                     disponibles)</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <select class="form-select" id="idPareja" name="idPareja">
+                                                    <select class="form-select" id="idPareja" name="idPareja" required>
                                                         <option value="<%=heroe.getPareja().getIdHeroe()%>" selected>Seleccione el ID de la pareja</option>
                                                         <%
                                                             for (Heroe h : listaParejas) {
@@ -213,6 +214,13 @@
                                             </div>
 
                                             <div class="row mb-3">
+                                                <%
+                                                if (mensajeError != null){
+                                                %>
+                                                <div class="col-md-4 col-lg-4 col-form-label">
+                                                    <span class="text-danger"><%=mensajeError%></span>
+                                                </div>
+                                                <%}%>
                                                 <div class="d-grid gap-2 col-6 col-lg-4 col-xl-3 mx-auto">
                                                     <button class="btn btn-secondary" type="submit">Guardar</button>
                                                 </div>

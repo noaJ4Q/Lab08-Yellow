@@ -8,7 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
   String idHeroe = (String) request.getAttribute("idHeroe");
+  String mensajeError = (String) request.getAttribute("mensajeError");
 %>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -142,7 +144,7 @@
                         <label for="nombre"
                                class="col-md-4 col-lg-3 col-form-label">Nombre del objeto</label>
                         <div class="col-md-8 col-lg-9">
-                          <input name="nombre" type="text" class="form-control" id="nombre">
+                          <input name="nombre" type="text" class="form-control" id="nombre" required>
                         </div>
                       </div>
 
@@ -150,11 +152,19 @@
                         <label for="cantidad"
                                class="col-md-4 col-lg-3 col-form-label">Cantidad</label>
                         <div class="col-md-8 col-lg-9">
-                          <input name="cantidad" type="text" class="form-control" id="cantidad">
+                          <input name="cantidad" type="text" class="form-control" id="cantidad" required>
                         </div>
                       </div>
 
                       <div class="row mb-3">
+                        <%
+                        if (mensajeError != null){
+
+                        %>
+                        <div class="col-md-4 col-lg-5 col-form-label">
+                          <span class="text-danger"><%=mensajeError%></span>
+                        </div>
+                        <%}%>
                         <div class="d-grid gap-2 col-6 col-lg-4 col-xl-3 mx-auto">
                           <button class="btn btn-secondary" type="submit">Añadir</button>
                         </div>

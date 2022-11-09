@@ -6,12 +6,14 @@ import com.example.lab08.MenuEnemigos.Beans.Inventario;
 import com.example.lab08.MenuEnemigos.Beans.Objeto;
 import com.example.lab08.MenuEnemigos.Daos.DaoHeroe;
 import com.example.lab08.MenuEnemigos.Daos.DaoInventario;
+import com.example.lab08.MenuEnemigos.Daos.DaoObjeto;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 @WebServlet(name = "MenuHeroes", value = "/MenuHeroes")
 public class MenuHeroes extends HttpServlet {
@@ -135,17 +137,21 @@ public class MenuHeroes extends HttpServlet {
         String action = request.getParameter("action");
         DaoHeroe daoHeroe = new DaoHeroe();
         DaoInventario daoInventario = new DaoInventario();
-        ArrayList<Heroe> listaParejasDisponibles = new ArrayList<>();
+        DaoObjeto daoObjeto = new DaoObjeto();
+        ArrayList<Heroe> listaParejasDisponibles;
+        ArrayList<Inventario> inventario;
         RequestDispatcher vista;
         Heroe heroe;
+        Objeto objeto;
         String idHeroe;
+        int idObjeto;
         Genero genero;
         Heroe pareja;
-        Inventario inventario;
         int nivel;
         int cantidad;
         float experiencia;
-        String mensajeError = "Error: Dato(s) inválido(s)";
+        float pesoTotal;
+        String mensajeError;
 
         switch (action) {
             case "buscar":
@@ -162,6 +168,7 @@ public class MenuHeroes extends HttpServlet {
 
             case "guardar":
 
+                mensajeError = "Error: Dato(s) inválido(s)";
                 heroe = new Heroe();
                 heroe.setNombre(request.getParameter("nombre"));
 
@@ -193,19 +200,18 @@ public class MenuHeroes extends HttpServlet {
                     pareja.setIdHeroe(Integer.parseInt(request.getParameter("idPareja")));
                     heroe.setPareja(pareja);
 
-                    if ((heroe.getNombre().length()<=10) && (heroe.getEdad()>=8 && heroe.getEdad()<=999) && (heroe.getClase().length()<=50) && (heroe.getNivel()>=1 && heroe.getNivel()<=100) && (heroe.getAtaque()>0)){
+                    if ((heroe.getNombre().length() <= 10) && (heroe.getEdad() >= 8 && heroe.getEdad() <= 999) && (heroe.getClase().length() <= 50) && (heroe.getNivel() >= 1 && heroe.getNivel() <= 100) && (heroe.getAtaque() > 0)) {
 
                         int idHeroeGuardado = daoHeroe.guardarHeroe(heroe);
                         if (idHeroeGuardado != 0) { // SI TIENE PAREJA SE ACTUALIZA DICHA PAREJA
                             daoHeroe.actualizarPareja(heroe.getPareja().getIdHeroe(), idHeroeGuardado);
                         }
                         response.sendRedirect(request.getContextPath() + "/MenuHeroes");
-                    }
-                    else {
+                    } else {
                         throw new NumberFormatException();
                     }
 
-                }catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
 
                     listaParejasDisponibles = daoHeroe.obtenerParejasDisponibles(0);
 
@@ -219,103 +225,179 @@ public class MenuHeroes extends HttpServlet {
 
                 break;
 
-                /*
-                Gateway Load Balancing Protocol (GLBP)
-                -
-
-                */
-
             case "actualizar":
 
+                mensajeError = "Error: Dato(s) inválido(s)";
                 heroe = new Heroe();
-                heroe.setIdHeroe(Integer.parseInt(request.getParameter("idHeroe")));
-                heroe.setNombre(request.getParameter("nombre"));
-                heroe.setEdad(Integer.parseInt(request.getParameter("edad")));
 
-                genero = new Genero();
-                genero.setIdGenero(request.getParameter("genero"));
-                heroe.setGenero(genero);
+                try {
+                    heroe.setIdHeroe(Integer.parseInt(request.getParameter("idHeroe")));
+                    heroe.setNombre(request.getParameter("nombre"));
+                    heroe.setEdad(Integer.parseInt(request.getParameter("edad")));
 
-                heroe.setClase(request.getParameter("clase"));
-                nivel = Integer.parseInt(request.getParameter("nivel"));
-                heroe.setNivel(nivel);
-                heroe.setAtaque(Integer.parseInt(request.getParameter("ataque")));
+                    genero = new Genero();
+                    genero.setIdGenero(request.getParameter("genero"));
+                    heroe.setGenero(genero);
 
-                experiencia = 0;
-                if (nivel > 0 && nivel <= 15) {
-                    experiencia = (nivel * nivel * nivel) * (24 + ((float) nivel + 1) / 3) / 50;
-                } else if (nivel >= 16 && nivel <= 35) {
-                    experiencia = (nivel * nivel * nivel) * (14 + (float) nivel) / 50;
-                } else if (nivel >= 36 && nivel <= 100) {
-                    experiencia = (nivel * nivel * nivel) * (32 + ((float) nivel / 2)) / 50;
+                    heroe.setClase(request.getParameter("clase"));
+                    nivel = Integer.parseInt(request.getParameter("nivel"));
+                    heroe.setNivel(nivel);
+                    heroe.setAtaque(Integer.parseInt(request.getParameter("ataque")));
+
+                    experiencia = 0;
+                    if (nivel > 0 && nivel <= 15) {
+                        experiencia = (nivel * nivel * nivel) * (24 + ((float) nivel + 1) / 3) / 50;
+                    } else if (nivel >= 16 && nivel <= 35) {
+                        experiencia = (nivel * nivel * nivel) * (14 + (float) nivel) / 50;
+                    } else if (nivel >= 36 && nivel <= 100) {
+                        experiencia = (nivel * nivel * nivel) * (32 + ((float) nivel / 2)) / 50;
+                    }
+
+                    heroe.setExperiencia(experiencia);
+
+                    pareja = new Heroe();
+                    pareja.setIdHeroe(Integer.parseInt(request.getParameter("idPareja")));
+                    heroe.setPareja(pareja);
+
+                    if ((heroe.getNombre().length() <= 10) && (heroe.getEdad() >= 8 && heroe.getEdad() <= 999) && (heroe.getClase().length() <= 50) && (heroe.getNivel() >= 1 && heroe.getNivel() <= 100) && (heroe.getAtaque() > 0)) {
+
+                        Heroe exPareja = daoHeroe.buscarPareja(heroe.getIdHeroe()); // UTILIZA PARAMETRO idPareja PARA HALLAR EXPAREJA
+                        daoHeroe.actualizarHeroe(heroe); // ACTUALIZO idPareja = null
+
+                        if (heroe.getPareja().getIdHeroe() == 0) { // ROMPE RELACION CON PAREJA
+                            daoHeroe.actualizarPareja(exPareja.getIdHeroe(), 0);
+                        } else {
+                            daoHeroe.actualizarPareja(heroe.getPareja().getIdHeroe(), heroe.getIdHeroe());
+                        }
+
+                        response.sendRedirect(request.getContextPath() + "/MenuHeroes");
+                    } else {
+                        throw new NumberFormatException();
+                    }
+
+                } catch (NumberFormatException e) {
+
+                    idHeroe = request.getParameter("idHeroe");
+                    heroe = daoHeroe.buscarPorId(idHeroe);
+                    listaParejasDisponibles = daoHeroe.obtenerParejasDisponibles(heroe.getIdHeroe());
+
+                    request.setAttribute("heroeEditar", heroe);
+                    request.setAttribute("listaParejas", listaParejasDisponibles);
+                    request.setAttribute("mensajeError", mensajeError);
+
+                    vista = request.getRequestDispatcher("EditarHeroe.jsp");
+                    vista.forward(request, response);
+
                 }
-
-                heroe.setExperiencia(experiencia);
-
-                pareja = new Heroe();
-                pareja.setIdHeroe(Integer.parseInt(request.getParameter("idPareja")));
-                heroe.setPareja(pareja);
-
-                Heroe exPareja = daoHeroe.buscarPareja(heroe.getIdHeroe()); // UTILIZA PARAMETRO idPareja PARA HALLAR EXPAREJA
-                daoHeroe.actualizarHeroe(heroe); // ACTUALIZO idPareja = null
-
-                if (heroe.getPareja().getIdHeroe() == 0) { // ROMPE RELACION CON PAREJA
-                    daoHeroe.actualizarPareja(exPareja.getIdHeroe(), 0);
-                } else {
-                    daoHeroe.actualizarPareja(heroe.getPareja().getIdHeroe(), heroe.getIdHeroe());
-                }
-
-                response.sendRedirect(request.getContextPath() + "/MenuHeroes");
 
                 break;
 
             case "guardarObjeto":
 
-                boolean disponible = true;
+                mensajeError = "Error: Dato(s) inválido(s)";
+
+                boolean disponible = false;
 
                 idHeroe = request.getParameter("idHeroe");
-                cantidad = Integer.parseInt(request.getParameter("cantidad"));
+                heroe = daoHeroe.buscarPorId(idHeroe);
+                inventario = daoInventario.obtenerInventario(idHeroe);
+                pesoTotal = 0;
 
-                String nombreObjeto = request.getParameter("nombre"); // SE DEBE VALIDAR QUE NO SEA UN OBJETO REPETIDO DEL HEROE
-
-                // ------ VALIDACION DE QUE HEROE NO REGISTRE MISMO OBJETO DOS VECES ---------
-                ArrayList<Inventario> listaObjetosHeroe = daoInventario.obtenerInventario(idHeroe);
-
-                for (Inventario inv : listaObjetosHeroe) {
-                    if (nombreObjeto.equalsIgnoreCase(inv.getObjeto().getNombreObjeto())) {
-                        disponible = false;
+                if (inventario != null){
+                    for (Inventario i : inventario){
+                        pesoTotal = pesoTotal + i.getObjeto().getPeso()*i.getCantidad();
                     }
                 }
 
-                if (disponible) { // " OBJETO DISPONIBLE "
-                    ArrayList<Objeto> listaObjetos = daoInventario.obtenerlistaObjetos();
-                    for (Objeto objeto : listaObjetos) {
-                        if (nombreObjeto.equalsIgnoreCase(objeto.getNombreObjeto())) { // OBJETO SE ENCUENTRA EN CATALOGO DE OBJETOS
-                            int idObjeto = objeto.getIdObjeto();
-                            daoInventario.guardarObjeto(Integer.parseInt(idHeroe), idObjeto, cantidad);
+                HashSet<Objeto> listaObjetos = daoInventario.obtenerlistaObjetos2();
+                HashSet<Objeto> listaObjetosHeroe = daoInventario.obtenerlistaObjetosHeroe(Integer.parseInt(idHeroe));
+                listaObjetos.removeAll(listaObjetosHeroe);
+                // FALTA OBTENER LISTA DE OBJETOS DISPONIBLES (listaObjetos)
 
-                            response.sendRedirect(request.getContextPath() + "/MenuHeroes?action=inventario&idHeroe=" + idHeroe);
-                        } else { // OBJETO NO SE ENCUENTRA EN CATALOGO DE OBJETOS
-                            // VISTA CON ERROR
+                try {
+                    cantidad = Integer.parseInt(request.getParameter("cantidad"));
+                    String nombreObjeto = request.getParameter("nombre"); // SE DEBE VALIDAR QUE NO SEA UN OBJETO REPETIDO DEL HEROE
+
+                    // ------ VALIDACION DE QUE HEROE NO REGISTRE MISMO OBJETO DOS VECES ---------
+
+                    for (Objeto o: listaObjetos){
+                        if (nombreObjeto.equalsIgnoreCase(o.getNombreObjeto())){
+
+                            pesoTotal = pesoTotal + cantidad*daoObjeto.buscarPorNombre(nombreObjeto).getPeso();
+
+                            if (cantidad>0 && (pesoTotal<(heroe.getAtaque()*heroe.getAtaque()))){
+                                disponible = true;
+                            }
+                            else {
+                                mensajeError = "Error: Cantidad inválida";
+                                throw new NumberFormatException();
+                            }
+
                         }
                     }
-                } else { // OBJETO REPETIDO
-                    // VISTA CON ERROR
-                }
 
-                // -----------------------------------------------------------------------------
+                    if (disponible){
+                        idObjeto = daoObjeto.buscarPorNombre(nombreObjeto).getIdObjeto();
+                        daoInventario.guardarObjeto(Integer.parseInt(idHeroe), idObjeto, cantidad);
+                        response.sendRedirect(request.getContextPath() + "/MenuHeroes?action=inventario&idHeroe=" + idHeroe);
+                    }
+                    else {
+                        mensajeError = "Error: Objeto inválido";
+                        throw new NumberFormatException();
+                    }
+
+                } catch (NumberFormatException e) {
+
+                    request.setAttribute("idHeroe", idHeroe);
+                    request.setAttribute("mensajeError", mensajeError);
+
+                    vista = request.getRequestDispatcher("AñadirObjeto.jsp");
+                    vista.forward(request, response);
+                }
 
                 break;
 
             case "actualizarObjeto":
 
-                cantidad = Integer.parseInt(request.getParameter("cantidad"));
                 idHeroe = request.getParameter("idHeroe");
-                String idObjeto = request.getParameter("idObjeto");
+                String idObjetoString = request.getParameter("idObjeto");
+                idObjeto = Integer.parseInt(idObjetoString);
 
-                daoInventario.actualizarObjeto(Integer.parseInt(idHeroe), Integer.parseInt(idObjeto), cantidad);
+                heroe = daoHeroe.buscarPorId(idHeroe);
 
-                response.sendRedirect(request.getContextPath() + "/MenuHeroes?action=inventario&idHeroe=" + idHeroe);
+                inventario = daoInventario.obtenerInventario(idHeroe);
+                pesoTotal = 0;
+                for (Inventario i: inventario){
+                    if (i.getObjeto().getIdObjeto()!=idObjeto){
+                        pesoTotal = pesoTotal + i.getObjeto().getPeso()*i.getCantidad();
+                    }
+                }
+
+                try {
+                    cantidad = Integer.parseInt(request.getParameter("cantidad"));
+
+                    pesoTotal = pesoTotal + cantidad*daoObjeto.buscarPorId(idObjeto).getPeso();
+
+                    if (pesoTotal<(heroe.getAtaque()*heroe.getAtaque())){
+                        daoInventario.actualizarObjeto(Integer.parseInt(idHeroe), idObjeto, cantidad);
+                        response.sendRedirect(request.getContextPath() + "/MenuHeroes?action=inventario&idHeroe=" + idHeroe);
+                    }
+                    else {
+                        throw new NumberFormatException();
+                    }
+
+                } catch (NumberFormatException e){
+
+                    cantidad = daoInventario.obtenerCantidad(Integer.parseInt(idHeroe), idObjeto);
+
+                    request.setAttribute("mensajeError", "Cantidad inválida"+pesoTotal);
+                    request.setAttribute("idHeroe", idHeroe);
+                    request.setAttribute("idObjeto", idObjetoString);
+                    request.setAttribute("cantidad", cantidad);
+
+                    vista = request.getRequestDispatcher("EditarObjeto.jsp");
+                    vista.forward(request, response);
+                }
 
                 break;
         }
