@@ -40,7 +40,7 @@ public class MenuEnemigos extends HttpServlet {
                 ArrayList<Objeto> listaObjetos = daoInventario.obtenerlistaObjetos();
                 request.setAttribute("ListaClases",listaClases);
                 request.setAttribute("ListaGeneros",listaGeneros);
-                request.setAttribute("listaObjetos",listaObjetos);
+                request.setAttribute("ListaObjetos",listaObjetos);
                 vista = request.getRequestDispatcher("AñadirEnemigo.jsp");
                 vista.forward(request,response);
                 break;
@@ -49,11 +49,18 @@ public class MenuEnemigos extends HttpServlet {
                 String idEnemigoStr = request.getParameter("id");
                 int idEnemigo = Integer.parseInt(idEnemigoStr);
                 Enemigo enemigo = daoEnemigo.buscarEnemigo(idEnemigo);
+                DaoInventario daoInventario1 = new DaoInventario();
 
                 if(enemigo==null){
                     response.sendRedirect(request.getContextPath()+"/MenuEnemigos");
                 }else{
                     request.setAttribute("Enemigo",enemigo);
+                    ArrayList<Clase> listaClases1 = daoClase.obtenerListaClases();
+                    ArrayList<Genero> listaGeneros1 = daoGenero.obtenerListaGeneros();
+                    ArrayList<Objeto> listaObjetos1 = daoInventario1.obtenerlistaObjetos();
+                    request.setAttribute("ListaClases",listaClases1);
+                    request.setAttribute("ListaGeneros",listaGeneros1);
+                    request.setAttribute("ListaObjetos",listaObjetos1);
                     vista= request.getRequestDispatcher("EditarEnemigo.jsp");
                     vista.forward(request,response);
                 }
@@ -119,7 +126,8 @@ public class MenuEnemigos extends HttpServlet {
                 break;
 
             case "actualizar": //para Actualizar los datos del Enemigo seleccionado
-
+                String idEnemigoStr = request.getParameter("idEnemigo");
+                int idEnemigo = Integer.parseInt(idEnemigoStr);
                 String nombre1 = request.getParameter("nombre");
                 Clase clase1 = new Clase();
                 String idClase1Str = request.getParameter("claseEnemigo");
@@ -147,6 +155,7 @@ public class MenuEnemigos extends HttpServlet {
 
                 //crear nuevo enemigo
                 Enemigo enemigo1 = new Enemigo();
+                enemigo1.setIdEnemigo(idEnemigo);
                 enemigo1.setNombreEnemigo(nombre1);
                 enemigo1.setClase(clase1);
                 enemigo1.setAtaque(ataque1);

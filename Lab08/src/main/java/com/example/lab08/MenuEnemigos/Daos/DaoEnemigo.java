@@ -139,7 +139,7 @@ public class DaoEnemigo {
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
-            pstmt.setString(1, enemigo.getNombreEnemigo());
+            pstmt.setString(1,enemigo.getNombreEnemigo());
             pstmt.setInt(2,enemigo.getClase().getIdClase());
             pstmt.setInt(3,enemigo.getAtaque());
             pstmt.setInt(4,enemigo.getExperiencia());
@@ -203,6 +203,7 @@ public class DaoEnemigo {
             pstmt.setInt(3, enemigo.getAtaque());
             pstmt.setInt(4, enemigo.getExperiencia());
             pstmt.setString(5,enemigo.getGenero().getIdGenero());
+            pstmt.setInt(6,enemigo.getIdEnemigo());
 
             pstmt.executeUpdate();
 

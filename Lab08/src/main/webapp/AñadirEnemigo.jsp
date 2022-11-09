@@ -149,7 +149,7 @@
                         <label for="claseEnemigo"
                                class="col-md-4 col-lg-3 col-form-label">Clase</label>
                         <div class="col-md-8 col-lg-9">
-                          <select name="claseEnemigo" id="claseEnemigo" class="form-control">
+                          <select name="claseEnemigo" id="claseEnemigo" class="form-select">
                             <% for(Clase clase: listaClases){ %>
                             <option value="<%=clase.getIdClase()%>"><%=clase.getNombreClase()%></option>
                             <% } %>
@@ -177,7 +177,7 @@
                         <label for="objetoEnemigo"
                                class="col-md-4 col-lg-3 col-form-label">Objeto que deja al ser Derrotado</label>
                         <div class="col-md-8 col-lg-9">
-                          <select name="objetoEnemigo" id="objetoEnemigo" class="form-control">
+                          <select name="objetoEnemigo" id="objetoEnemigo" class="form-select">
                             <% for(Objeto obj: listaObjetos){ %>
                             <option value="<%=obj.getIdObjeto()%>"><%=obj.getNombreObjeto()%></option>
                             <% } %>
@@ -197,7 +197,7 @@
                         <label for="generoEnemigo"
                                class="col-md-4 col-lg-3 col-form-label">Genero (OPCIONAL)</label>
                         <div class="col-md-8 col-lg-9">
-                          <select name="generoEnemigo" id="generoEnemigo" class="form-control">
+                          <select name="generoEnemigo" id="generoEnemigo" class="form-select">
                             <% for(Genero genero: listaGeneros){ %>
                             <option value="<%=genero.getIdGenero()%>"><%=genero.getNombreGenero()%></option>
                             <% } %>

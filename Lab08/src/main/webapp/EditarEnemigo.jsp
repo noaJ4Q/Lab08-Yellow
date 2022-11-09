@@ -3,11 +3,13 @@
 <%@ page import="com.example.lab08.MenuEnemigos.Beans.Clase" %>
 <%@ page import="com.example.lab08.MenuEnemigos.Beans.Genero" %>
 <%@ page import="com.example.lab08.MenuEnemigos.Beans.Objeto" %>
+<%@ page import="com.example.lab08.MenuEnemigos.Beans.Enemigo" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <% ArrayList<Clase> listaClases = (ArrayList<Clase>) request.getAttribute("ListaClases");
     ArrayList<Genero> listaGeneros = (ArrayList<Genero>) request.getAttribute("ListaGeneros");
     ArrayList<Objeto> listaObjetos = (ArrayList<Objeto>) request.getAttribute("ListaObjetos");
+    Enemigo enemigo = (Enemigo) request.getAttribute("Enemigo");
 %>
 <html>
     <head>
@@ -135,16 +137,17 @@
                                 <div class="card top-selling overflow-auto">
 
                                     <div class="card-body pb-0">
-                                        <h5 class="card-title">AÑADIR ENEMIGO</h5>
-                                        <form method="post" action="<%=request.getContextPath()%>/MenuEnemigos?action=guardar">
+                                        <h5 class="card-title">EDITAR ENEMIGO</h5>
+                                        <form method="post" action="<%=request.getContextPath()%>/MenuEnemigos?action=actualizar">
 
-
+                                            <input name="idEnemigo" type="hidden" class="form-control" id="idEnemigo"
+                                                   value="<%=enemigo.getIdEnemigo()%>">
 
                                             <div class="row mb-3">
                                                 <label for="nombre"
                                                        class="col-md-4 col-lg-3 col-form-label">Nombre</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="nombre" type="text" class="form-control" id="nombre">
+                                                    <input name="nombre" type="text" class="form-control" id="nombre" value="<%=enemigo.getNombreEnemigo()%>">
                                                 </div>
                                             </div>
 
@@ -152,10 +155,17 @@
                                                 <label for="claseEnemigo"
                                                        class="col-md-4 col-lg-3 col-form-label">Clase</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <select name="claseEnemigo" id="claseEnemigo" class="form-control">
-                                                        <% for(Clase clase: listaClases){ %>
-                                                        <option value="<%=clase.getIdClase()%>"><%=clase.getNombreClase()%></option>
-                                                        <% } %>
+                                                    <select name="claseEnemigo" id="claseEnemigo" class="form-select">
+                                                        <option value="<%=enemigo.getClase().getIdClase()%>" selected> </option>
+                                                        <%
+                                                            for (Clase c : listaClases) {
+                                                        %>
+                                                        <option value="<%=c.getIdClase()%>"><%=c.getNombreClase()%>
+                                                        </option>
+                                                        <%}%>
+                                                        <!--< % for(Clase clase: listaClases){ %>
+                                                        <option value="< % =clase.getIdClase() %>">< % =clase.getNombreClase()%></option>
+                                                        < % } %> -->
                                                     </select>
                                                 </div>
                                             </div>
@@ -164,7 +174,7 @@
                                                 <label for="ataque"
                                                        class="col-md-4 col-lg-3 col-form-label">Ataque del Enemigo (Numero Entero)</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="ataque" type="text" class="form-control" id="ataque">
+                                                    <input name="ataque" type="text" class="form-control" id="ataque" value="<%=enemigo.getAtaque()%>">
                                                 </div>
                                             </div>
 
@@ -172,7 +182,7 @@
                                                 <label for="experiencia"
                                                        class="col-md-4 col-lg-3 col-form-label">Experiencia al ser Derrotado (Numero Entero)</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="experiencia" type="text" class="form-control" id="experiencia">
+                                                    <input name="experiencia" type="text" class="form-control" id="experiencia" value="<%=enemigo.getExperiencia()%>">
                                                 </div>
                                             </div>
 
@@ -180,7 +190,7 @@
                                                 <label for="objetoEnemigo"
                                                        class="col-md-4 col-lg-3 col-form-label">Objeto que deja al ser Derrotado</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <select name="objetoEnemigo" id="objetoEnemigo" class="form-control">
+                                                    <select name="objetoEnemigo" id="objetoEnemigo" class="form-select">
                                                         <% for(Objeto obj: listaObjetos){ %>
                                                         <option value="<%=obj.getIdObjeto()%>"><%=obj.getNombreObjeto()%></option>
                                                         <% } %>
@@ -192,7 +202,7 @@
                                                 <label for="probabilidad"
                                                        class="col-md-4 col-lg-3 col-form-label">Probabilidad de Dropear el Objeto (Numero Decimal)</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="probabilidad" type="text" class="form-control" id="probabilidad">
+                                                    <input name="probabilidad" type="text" class="form-control" id="probabilidad" value="<%=enemigo.getProbabilidad()%>">
                                                 </div>
                                             </div>
 
@@ -200,7 +210,7 @@
                                                 <label for="generoEnemigo"
                                                        class="col-md-4 col-lg-3 col-form-label">Genero (OPCIONAL)</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <select name="generoEnemigo" id="generoEnemigo" class="form-control">
+                                                    <select name="generoEnemigo" id="generoEnemigo" class="form-select">
                                                         <% for(Genero genero: listaGeneros){ %>
                                                         <option value="<%=genero.getIdGenero()%>"><%=genero.getNombreGenero()%></option>
                                                         <% } %>
@@ -210,7 +220,7 @@
 
                                             <div class="row mb-3">
                                                 <div class="d-grid gap-2 col-6 col-lg-4 col-xl-3 mx-auto">
-                                                    <button class="btn btn-secondary" type="submit">Añadir</button>
+                                                    <button class="btn btn-secondary" type="submit">Actualizar</button>
                                                 </div>
                                             </div>
 
