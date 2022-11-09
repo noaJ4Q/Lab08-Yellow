@@ -33,12 +33,9 @@ public class MenuEnemigos extends HttpServlet {
                 break;
 
             case "crear":
-                ArrayList<Clase> listaClases = daoClase.obtenerListaClases();
-                ArrayList<Genero> listaGeneros = daoGenero.obtenerListaGeneros();
                 DaoInventario daoInventario = new DaoInventario();
-                //rrayList<Objeto> listaObjetos = daoInventario.obtenerlistaObjetos();
-                request.setAttribute("ListaClases",listaClases);
-                request.setAttribute("ListaGeneros",listaGeneros);
+                request.setAttribute("ListaClases",daoClase.obtenerListaClases());
+                request.setAttribute("ListaGeneros",daoGenero.obtenerListaGeneros());
                 request.setAttribute("ListaObjetos",daoInventario.obtenerlistaObjetos());
                 vista = request.getRequestDispatcher("AñadirEnemigo.jsp");
                 vista.forward(request,response);
@@ -54,15 +51,12 @@ public class MenuEnemigos extends HttpServlet {
                     response.sendRedirect(request.getContextPath()+"/MenuEnemigos");
                 }else{
                     request.setAttribute("Enemigo",enemigo);
-                    ArrayList<Clase> listaClases1 = daoClase.obtenerListaClases();
-                    ArrayList<Genero> listaGeneros1 = daoGenero.obtenerListaGeneros();
-                    ArrayList<Objeto> listaObjetos1 = daoInventario1.obtenerlistaObjetos();
-                    request.setAttribute("ListaClases",listaClases1);
-                    request.setAttribute("ListaGeneros",listaGeneros1);
-                    request.setAttribute("ListaObjetos",listaObjetos1);
-                    vista= request.getRequestDispatcher("EditarEnemigo.jsp");
+                    request.setAttribute("ListaClases",daoClase.obtenerListaClases());
+                    request.setAttribute("ListaGeneros",daoGenero.obtenerListaGeneros());
+                    request.setAttribute("ListaObjetos",daoInventario1.obtenerlistaObjetos());
+                    vista= request.getRequestDispatcher("EditarEnemigo2.jsp");
                     vista.forward(request,response);
-                    response.sendRedirect(request.getContextPath()+"/MenuEnemigos");
+                    //response.sendRedirect(request.getContextPath()+"/MenuEnemigos");
                 }
 
              break;
@@ -83,6 +77,8 @@ public class MenuEnemigos extends HttpServlet {
         String action = request.getParameter("action");
         DaoEnemigo daoEnemigo = new DaoEnemigo();
         DaoInventario daoInventario = new DaoInventario();
+        DaoClase daoClase = new DaoClase();
+        DaoGenero daoGenero = new DaoGenero();
 
         switch (action) {
             case "guardar": //para Guardar el Enemigo creado
@@ -91,6 +87,11 @@ public class MenuEnemigos extends HttpServlet {
                 String idClaseStr = request.getParameter("claseEnemigo");
                 int idClaseEnemigo = Integer.parseInt(idClaseStr);
                 clase.setIdClase(idClaseEnemigo);
+                for( Clase c : daoClase.obtenerListaClases()){
+                    if(c.getIdClase() == idClaseEnemigo){
+                        clase.setNombreClase(c.getNombreClase());
+                    }
+                }
                 String ataqueStr = request.getParameter("ataque");
                 int ataque = Integer.parseInt(ataqueStr);
                 String experienciaStr = request.getParameter("experiencia");
@@ -109,6 +110,11 @@ public class MenuEnemigos extends HttpServlet {
                 Genero genero = new Genero();
                 String idGenero = request.getParameter("generoEnemigo");
                 genero.setIdGenero(idGenero);
+                for (Genero gen: daoGenero.obtenerListaGeneros()){
+                    if(gen.getIdGenero() == idGenero ){
+                        genero.setNombreGenero(gen.getNombreGenero());
+                    }
+                }
 
                 //crear nuevo enemigo
                 Enemigo enemigo = new Enemigo();
@@ -120,6 +126,7 @@ public class MenuEnemigos extends HttpServlet {
                 enemigo.setProbabilidad(probabilidad);
                 enemigo.setGenero(genero);
                 daoEnemigo.agregarEnemigo(enemigo);
+                //daoEnemigo.agregarDropeo(10,idObjeto,probabilidad);
 
                 response.sendRedirect(request.getContextPath() + "/MenuEnemigos");
 
@@ -165,7 +172,7 @@ public class MenuEnemigos extends HttpServlet {
                 enemigo1.setProbabilidad(probabilidad1);
                 enemigo1.setGenero(genero1);
                 daoEnemigo.actualizarEnemigo(enemigo1);
-                daoEnemigo.actualizarDropeo(enemigo1);
+                //daoEnemigo.actualizarDropeo(enemigo1);
 
                 response.sendRedirect(request.getContextPath() + "/MenuEnemigos");
 

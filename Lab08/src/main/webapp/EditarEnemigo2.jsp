@@ -1,7 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="com.example.lab08.MenuEnemigos.Beans.Clase" %>
 <%@ page import="com.example.lab08.MenuEnemigos.Beans.Genero" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page import="com.example.lab08.MenuEnemigos.Beans.Objeto" %>
 <%@ page import="com.example.lab08.MenuEnemigos.Beans.Enemigo" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -16,7 +15,7 @@
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-        <title>Añadir Enemigo / Wiki Fantástica</title>
+        <title>Editar Enemigo / Wiki Fantástica</title>
 
         <!-- Favicons -->
         <link href="assets/img/favicon.png" rel="icon">
@@ -155,17 +154,10 @@
                                                 <label for="claseEnemigo"
                                                        class="col-md-4 col-lg-3 col-form-label">Clase</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <select name="claseEnemigo" id="claseEnemigo" class="form-select">
-                                                        <option value="<%=enemigo.getClase().getIdClase()%>" selected> </option>
-                                                        <%
-                                                            for (Clase c : listaClases) {
-                                                        %>
-                                                        <option value="<%=c.getIdClase()%>"><%=c.getNombreClase()%>
-                                                        </option>
-                                                        <%}%>
-                                                        <!--< % for(Clase clase: listaClases){ %>
-                                                        <option value="< % =clase.getIdClase() %>">< % =clase.getNombreClase()%></option>
-                                                        < % } %> -->
+                                                    <select name="claseEnemigo" id="claseEnemigo" class="form-select" value="<%=enemigo.getClase().getIdClase()%>">
+                                                        <% for(Clase clase: listaClases){ %>
+                                                        <option value="<%=clase.getIdClase()%>"><%=clase.getNombreClase()%></option>
+                                                        <% } %>
                                                     </select>
                                                 </div>
                                             </div>
@@ -190,7 +182,7 @@
                                                 <label for="objetoEnemigo"
                                                        class="col-md-4 col-lg-3 col-form-label">Objeto que deja al ser Derrotado</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <select name="objetoEnemigo" id="objetoEnemigo" class="form-select">
+                                                    <select name="objetoEnemigo" id="objetoEnemigo" class="form-select" >
                                                         <% for(Objeto obj: listaObjetos){ %>
                                                         <option value="<%=obj.getIdObjeto()%>"><%=obj.getNombreObjeto()%></option>
                                                         <% } %>
@@ -202,7 +194,7 @@
                                                 <label for="probabilidad"
                                                        class="col-md-4 col-lg-3 col-form-label">Probabilidad de Dropear el Objeto (Numero Decimal)</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="probabilidad" type="text" class="form-control" id="probabilidad" value="<%=enemigo.getProbabilidad()%>">
+                                                    <input name="probabilidad" type="text" class="form-control" id="probabilidad" value="<%=enemigo.getProbabilidad()%>" >
                                                 </div>
                                             </div>
 
@@ -210,7 +202,7 @@
                                                 <label for="generoEnemigo"
                                                        class="col-md-4 col-lg-3 col-form-label">Genero (OPCIONAL)</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <select name="generoEnemigo" id="generoEnemigo" class="form-select">
+                                                    <select name="generoEnemigo" id="generoEnemigo" class="form-select" value="<%=enemigo.getGenero().getIdGenero()%>">
                                                         <% for(Genero genero: listaGeneros){ %>
                                                         <option value="<%=genero.getIdGenero()%>"><%=genero.getNombreGenero()%></option>
                                                         <% } %>

@@ -26,9 +26,9 @@ public class DaoEnemigo {
         String password = "root";
         String url = "jdbc:mysql://localhost:3306/yellow";
         String sql = "select e.*,c.*,cdo.nombre,d.*,g.* from enemigo e "+
-        "inner join clase c on e.idClase = c.idClase "+
-        "inner join dropeo d on e.idEnemigo = d.idEnemigo "+
-        "inner join catalogodeobjetos cdo on d.idObjeto = cdo.idObjeto "+
+        "left join clase c on e.idClase = c.idClase "+
+        "left join dropeo d on e.idEnemigo = d.idEnemigo "+
+        "left join catalogodeobjetos cdo on d.idObjeto = cdo.idObjeto "+
         "left join genero g on e.idGenero = g.idGenero";
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
@@ -154,7 +154,7 @@ public class DaoEnemigo {
 
     }
 
-    public void agregarDropeo(Enemigo enemigo) {
+    public void agregarDropeo(int idEnemigoNuevo2 , int idObjeto2 , float probabilidad2) {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -174,9 +174,9 @@ public class DaoEnemigo {
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
-            pstmt.setInt(1, enemigo.getObjeto().getIdObjeto());
-            pstmt.setInt(2,enemigo.getIdEnemigo());
-            pstmt.setFloat(3,enemigo.getProbabilidad());
+            pstmt.setInt(1,idObjeto2 );
+            pstmt.setInt(2,idEnemigoNuevo2);
+            pstmt.setFloat(3,probabilidad2);
 
             pstmt.executeUpdate();
 
@@ -193,7 +193,7 @@ public class DaoEnemigo {
             throw new RuntimeException(e);
         }
 
-        String url = "jdbc:mysql://localhost:3306/hr";
+        String url = "jdbc:mysql://localhost:3306/yellow";
         String sql = "UPDATE enemigo SET nombre= ?,idClase = ?, ataque = ?, experiencia = ? , idGenero = ? WHERE idEnemigo = ?";
 
         try (Connection connection = DriverManager.getConnection(url, "root", "root");
